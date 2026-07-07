@@ -1,0 +1,1300 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>入試数学ドリル — 中学・高校数学トレーニング</title>
+<style>
+:root{
+  --paper:#f6f5f0; --card:#fffefb; --ink:#1c2438; --mut:#636a7e; --line:#dcdbd1;
+  --grid:rgba(43,76,155,.07);
+  --shu:#c9333f; --shu-ink:#b02a35; --shu-soft:#fbeef0;
+  --ai:#2b4c9b; --ai-ink:#233f80; --ai-soft:#edf1fa;
+  --dim:rgba(28,36,56,.05);
+  --sh:0 1px 2px rgba(28,36,56,.05),0 10px 28px rgba(28,36,56,.07);
+  --mincho:'Hiragino Mincho ProN','Yu Mincho',YuMincho,'Noto Serif JP','Noto Serif CJK JP','Times New Roman',serif;
+  --gothic:'Hiragino Kaku Gothic ProN','Hiragino Sans','Yu Gothic',Meiryo,'Noto Sans JP','Noto Sans CJK JP',system-ui,sans-serif;
+  --math:Georgia,'Times New Roman',serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#131722; --card:#1c2130; --ink:#e9ebf3; --mut:#9aa1b5; --line:#313848;
+    --grid:rgba(125,155,255,.055);
+    --shu:#f0616c; --shu-ink:#ff7a83; --shu-soft:#39222a;
+    --ai:#5d7fe8; --ai-ink:#8aa5ff; --ai-soft:#232d47;
+    --dim:rgba(233,235,243,.06);
+    --sh:0 1px 2px rgba(0,0,0,.35),0 10px 28px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131722; --card:#1c2130; --ink:#e9ebf3; --mut:#9aa1b5; --line:#313848;
+  --grid:rgba(125,155,255,.055);
+  --shu:#f0616c; --shu-ink:#ff7a83; --shu-soft:#39222a;
+  --ai:#5d7fe8; --ai-ink:#8aa5ff; --ai-soft:#232d47;
+  --dim:rgba(233,235,243,.06);
+  --sh:0 1px 2px rgba(0,0,0,.35),0 10px 28px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;color:var(--ink);background:var(--paper);font-family:var(--gothic);
+  font-size:15px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+}
+.wrap{max-width:900px;margin:0 auto;padding:28px 18px 70px}
+.hide{display:none!important}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--ai);outline-offset:2px;border-radius:3px}
+
+/* ---------- home ---------- */
+.hero{display:flex;align-items:center;justify-content:center;gap:22px;padding:26px 8px 30px;text-align:center}
+.hero-t h1{font-family:var(--mincho);font-weight:600;font-size:clamp(1.9rem,5.5vw,2.7rem);letter-spacing:.08em;margin:0;text-wrap:balance}
+.hero-t .sub{color:var(--mut);margin:8px 0 0;font-size:.92rem;letter-spacing:.05em}
+.hero-t .eyebrow{font-size:.75rem;letter-spacing:.32em;color:var(--shu);margin:0 0 6px;font-weight:600}
+.hanko{flex:none;width:64px;height:64px;border:2.5px solid var(--shu);color:var(--shu);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mincho);font-weight:600;
+  font-size:1.35rem;letter-spacing:.1em;line-height:1.15;transform:rotate(-7deg);padding:4px;
+  writing-mode:vertical-rl;opacity:.92}
+.sec{margin-top:26px}
+.sec-h{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:8px;margin:0 0 16px}
+.sec-h h2{font-family:var(--mincho);font-weight:600;font-size:1.22rem;letter-spacing:.14em;margin:0}
+.sec-h .for{font-size:.78rem;color:var(--shu);font-weight:600;letter-spacing:.12em}
+.sec-h .note{margin-left:auto;font-size:.74rem;color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.ucard{position:relative;display:flex;flex-direction:column;gap:6px;text-align:left;
+  background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--sh);
+  padding:18px 16px 14px;margin-top:10px;transition:transform .16s ease,border-color .16s ease}
+.ucard:hover{transform:translateY(-2px);border-color:var(--ai)}
+.utab{position:absolute;top:-10px;right:14px;color:#fff;background:var(--uc,#2b4c9b);
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;padding:2px 10px 1px;border-radius:2px;
+  box-shadow:0 2px 5px rgba(28,36,56,.25)}
+.uname{font-family:var(--mincho);font-weight:600;font-size:1.28rem;letter-spacing:.1em}
+.uname .exam-b{display:inline-block;font-family:var(--gothic);font-size:.68rem;font-weight:700;color:var(--shu);
+  border:1.5px solid var(--shu);border-radius:2px;padding:0 6px;margin-left:8px;vertical-align:2px;letter-spacing:.15em}
+.utopics{font-size:.8rem;color:var(--mut);line-height:1.6;min-height:2.6em}
+.ubest{font-size:.78rem;color:var(--mut);border-top:1px dashed var(--line);padding-top:8px;margin-top:auto;
+  display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.ubest b{color:var(--ink);font-weight:600}
+.foot{margin-top:40px;text-align:center;color:var(--mut);font-size:.78rem;letter-spacing:.05em}
+.kbd{display:inline-block;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;
+  padding:0 6px;font-size:.72rem;background:var(--card);font-variant-numeric:tabular-nums}
+
+/* ---------- game ---------- */
+.gbar{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.gtitle{font-family:var(--mincho);font-weight:600;letter-spacing:.1em;font-size:1.05rem}
+.gstats{margin-left:auto;display:flex;align-items:center;gap:10px;font-variant-numeric:tabular-nums}
+.score-l{font-size:.72rem;color:var(--mut);letter-spacing:.1em}
+.score-v{font-size:1.25rem;font-weight:700}
+.chip{font-size:.75rem;font-weight:700;color:var(--shu);border:1.5px solid var(--shu);
+  border-radius:999px;padding:1px 10px;letter-spacing:.05em}
+.chip.pop{animation:pop .3s ease}
+.qmeta{display:flex;align-items:baseline;gap:10px;margin:14px 2px 6px}
+.qnum{font-family:var(--mincho);font-weight:600;font-size:1.02rem;letter-spacing:.08em}
+.qtag{font-size:.72rem;color:var(--ai-ink);background:var(--ai-soft);padding:1px 9px;border-radius:2px;letter-spacing:.06em}
+.qtotal{margin-left:auto;font-size:.76rem;color:var(--mut);font-variant-numeric:tabular-nums}
+.timer{height:5px;background:var(--dim);border-radius:99px;overflow:hidden;margin:2px 0 14px}
+.timer i{display:block;height:100%;width:100%;background:var(--ai);border-radius:99px;transition:width .1s linear}
+.timer.low i{background:var(--shu)}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--sh);
+  padding:26px 22px;margin-bottom:16px;animation:qin .25s ease}
+.qtext{font-size:1.32rem;line-height:2.15;overflow-x:auto;overflow-y:hidden;padding-bottom:2px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:600px){.choices{grid-template-columns:1fr}.hero{flex-direction:column;gap:14px}}
+.ch{display:flex;align-items:center;gap:12px;text-align:left;font-size:1.06rem;line-height:1.9;
+  background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:3px;
+  padding:11px 14px;box-shadow:var(--sh);transition:border-color .12s,transform .12s}
+.ch:hover:not(:disabled){border-color:var(--ai);transform:translateY(-1px)}
+.ch:disabled{cursor:default}
+.ch .no{flex:none;font-size:1.15rem;color:var(--mut);font-family:var(--gothic)}
+.ch .cv{overflow-x:auto;overflow-y:hidden}
+.ch.correct{border-color:var(--shu);background:var(--shu-soft);box-shadow:none}
+.ch.correct .no{color:var(--shu);font-weight:700}
+.ch.wrong{border-color:var(--mut);background:var(--dim);box-shadow:none;animation:shake .3s ease}
+.ch.dim{opacity:.45;box-shadow:none}
+.fb{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+  border-radius:3px;box-shadow:var(--sh);padding:16px 18px;margin-top:16px;animation:qin .2s ease}
+.mark{flex:none;width:58px;height:58px;display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;font-weight:600;border-radius:6px;animation:stamp .32s cubic-bezier(.2,1.4,.4,1)}
+.fb.ok .mark{color:var(--shu);border:2.5px solid var(--shu);transform:rotate(-6deg)}
+.fb.ng .mark{color:var(--mut);border:2.5px solid var(--mut);transform:rotate(-6deg)}
+.fb-t{flex:1;min-width:0}
+.fb-h{font-weight:700;font-size:1.02rem;letter-spacing:.06em}
+.fb.ok .fb-h{color:var(--shu)}
+.fb-e{font-size:.9rem;color:var(--mut);margin-top:3px;line-height:1.9;overflow-x:auto}
+.fb-e b{color:var(--ink)}
+.fb-next{margin-top:10px}
+
+/* ---------- result ---------- */
+.res{background:var(--card);border:1px solid var(--line);border-radius:3px;box-shadow:var(--sh);
+  padding:40px 24px;text-align:center;margin-top:24px}
+.res-unit{font-family:var(--mincho);letter-spacing:.15em;color:var(--mut);font-size:.95rem}
+.stamp{width:110px;height:110px;margin:20px auto 6px;border:3.5px solid var(--shu);border-radius:8px;
+  color:var(--shu);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mincho);font-size:4rem;font-weight:600;transform:rotate(-7deg);
+  animation:stamp .4s cubic-bezier(.2,1.4,.4,1)}
+.rank-t{font-family:var(--mincho);font-size:1.15rem;letter-spacing:.2em;color:var(--shu);font-weight:600;margin-top:10px}
+.res-score{font-size:2.4rem;font-weight:700;font-variant-numeric:tabular-nums;margin-top:14px;line-height:1.2}
+.res-score small{font-size:1rem;color:var(--mut);font-weight:400;margin-left:4px}
+.newbest{display:inline-block;margin-top:8px;color:var(--shu);border:1.5px solid var(--shu);
+  border-radius:999px;font-size:.78rem;font-weight:700;padding:1px 12px;letter-spacing:.1em}
+.res-stats{display:flex;justify-content:center;gap:26px;margin-top:22px;font-variant-numeric:tabular-nums;flex-wrap:wrap}
+.rs .l{font-size:.72rem;color:var(--mut);letter-spacing:.12em}
+.rs .v{font-size:1.3rem;font-weight:700}
+.res-btns{display:flex;justify-content:center;gap:12px;margin-top:30px;flex-wrap:wrap}
+
+/* ---------- buttons ---------- */
+.btn{border:none;border-radius:3px;background:var(--ai);color:#fff;font-weight:700;
+  font-size:.92rem;letter-spacing:.08em;padding:10px 22px;box-shadow:var(--sh);transition:transform .12s,opacity .12s}
+.btn:hover{transform:translateY(-1px);opacity:.92}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--ai);color:var(--ai-ink)}
+.btn.sm{padding:5px 12px;font-size:.78rem}
+
+/* ---------- math ---------- */
+i,var{font-family:var(--math);font-style:italic}
+sup,sub{font-size:.68em;line-height:1}
+.fr{display:inline-flex;flex-direction:column;vertical-align:-.55em;text-align:center;
+  margin:0 2px;line-height:1.25;font-size:.9em}
+.fr>span{padding:0 4px}
+.fr>span:first-child{border-bottom:1.4px solid currentColor}
+.rt{white-space:nowrap}
+.rt .vin{border-top:1.4px solid currentColor;padding:0 2px 0 1px}
+.vc{position:relative;display:inline-block;font-family:var(--math);font-style:italic;padding:0 2px;margin-top:.4em}
+.vc::before{content:"\2192";position:absolute;top:-1em;left:50%;transform:translateX(-50%);font-size:.62em;font-style:normal}
+.dt{display:inline-block;text-align:center;border:1px dashed var(--line);border-radius:3px;
+  padding:2px 12px;font-variant-numeric:tabular-nums;letter-spacing:.08em}
+
+@keyframes qin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes stamp{from{opacity:0;transform:scale(1.7) rotate(-15deg)}to{opacity:1;transform:scale(1) rotate(-6deg)}}
+@keyframes pop{50%{transform:scale(1.18)}}
+@keyframes shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="scr-home" class="scr">
+    <header class="hero">
+      <div class="hero-t">
+        <p class="eyebrow">高校受験・大学受験対応</p>
+        <h1>入試数学ドリル</h1>
+        <p class="sub">中学数学・高校数学 全11コース ─ 問題は毎回自動生成</p>
+      </div>
+      <div class="hanko" aria-hidden="true">必勝</div>
+    </header>
+    <section class="sec">
+      <div class="sec-h"><h2>中学数学</h2><span class="for">高校受験</span><span class="note">学年別＋受験対策</span></div>
+      <div class="grid" id="grid-jhs"></div>
+    </section>
+    <section class="sec">
+      <div class="sec-h"><h2>高校数学</h2><span class="for">大学受験</span><span class="note">科目別＋受験対策</span></div>
+      <div class="grid" id="grid-hs"></div>
+    </section>
+    <p class="foot">1回10問・4択。<span class="kbd">1</span>〜<span class="kbd">4</span>キーで解答、<span class="kbd">Enter</span>で次の問題へ。成績はこの端末に保存されます。</p>
+  </div>
+
+  <div id="scr-game" class="scr hide">
+    <div class="gbar">
+      <button class="btn ghost sm" id="btn-quit">← コース選択</button>
+      <div class="gtitle" id="g-unit"></div>
+      <div class="gstats">
+        <span id="g-streak" class="chip hide"></span>
+        <span><span class="score-l">SCORE</span> <span class="score-v" id="g-score">0</span></span>
+      </div>
+    </div>
+    <div class="qmeta">
+      <span class="qnum" id="g-num">第1問</span>
+      <span class="qtag" id="g-topic"></span>
+      <span class="qtotal" id="g-prog">1 / 10</span>
+    </div>
+    <div class="timer" id="g-timerbox"><i id="g-timer"></i></div>
+    <div class="qcard"><div class="qtext" id="g-q"></div></div>
+    <div class="choices" id="g-choices"></div>
+    <div id="g-fb" class="fb hide">
+      <div class="mark" id="g-mark"></div>
+      <div class="fb-t">
+        <div class="fb-h" id="g-fbh"></div>
+        <div class="fb-e" id="g-fbe"></div>
+        <button class="btn fb-next" id="btn-next">次へ ▸</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="scr-res" class="scr hide">
+    <div class="res">
+      <div class="res-unit" id="r-unit"></div>
+      <div class="stamp" id="r-rank">S</div>
+      <div class="rank-t" id="r-rankt"></div>
+      <div class="res-score"><span id="r-score">0</span><small>点</small></div>
+      <div><span class="newbest hide" id="r-best">ベスト更新！</span></div>
+      <div class="res-stats">
+        <div class="rs"><div class="l">正解数</div><div class="v" id="r-correct">0/10</div></div>
+        <div class="rs"><div class="l">最大連続正解</div><div class="v" id="r-streak">0</div></div>
+        <div class="rs"><div class="l">自己ベスト</div><div class="v" id="r-hi">0</div></div>
+      </div>
+      <div class="res-btns">
+        <button class="btn" id="btn-retry">もう一度挑戦</button>
+        <button class="btn ghost" id="btn-home">コース選択へ</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+'use strict';
+/* ============ utilities ============ */
+const $=id=>document.getElementById(id);
+const ri=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[ri(0,a.length-1)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;};
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a;};
+const M='−'; // minus sign
+const fm=n=>{if(typeof n==='number'&&!Number.isInteger(n))n=Math.round(n*1000)/1000;return String(n).replace(/-/g,M);};
+const pn=n=>n<0?`(${fm(n)})`:fm(n); // wrap negatives in ()
+const sup=s=>`<sup>${s}</sup>`;
+const it=s=>`<i>${s}</i>`;
+const X=it('x'),Y=it('y'),N_=it('n'),TH=it('θ');
+const X2=X+sup(2),X3=X+sup(3);
+const fr=(a,b)=>`<span class="fr"><span>${a}</span><span>${b}</span></span>`;
+const frq=(n,d)=>{if(d<0){n=-n;d=-d;}const g=gcd(n,d)||1;n/=g;d/=g;
+  if(d===1)return fm(n);return (n<0?M:'')+fr(fm(Math.abs(n)),fm(d));};
+const rt=x=>`<span class="rt">√<span class="vin">${x}</span></span>`;
+const srt=(k,x)=>(k===1?'':k===-1?M:fm(k))+rt(x);
+const vec=s=>`<span class="vc">${s}</span>`;
+const DEG='°';
+/* build "3x² − 4x + 1" from [coef, varHtml] pairs */
+const term=(c,v,first)=>{if(c===0)return'';
+  const a=Math.abs(c);let s=first?(c<0?M:''):(c<0?` ${M} `:' + ');
+  s+=(a===1&&v)?'':fm(a);return s+v;};
+const poly=(...cv)=>{let s='',first=true;
+  for(const[c,v]of cv){if(c===0)continue;s+=term(c,v,first);first=false;}
+  return s||'0';};
+const linEx=(p,q,v)=>poly([p,v||X],[q,'']);
+
+/* ============ MCQ builders ============ */
+function mk(q,topic,correct,wrongs,e){
+  const cs=[String(correct)],seen=new Set(cs);
+  for(const w of wrongs){const s=String(w);
+    if(!seen.has(s)){seen.add(s);cs.push(s);}if(cs.length===4)break;}
+  while(cs.length<4){const s=fm(ri(2,199));if(!seen.has(s)){seen.add(s);cs.push(s);}}
+  const idx=shuffle([0,1,2,3]);
+  return {q,topic,c:idx.map(i=>cs[i]),a:idx.indexOf(0),e};
+}
+function numMC(q,topic,ans,e,fmt){fmt=fmt||fm;
+  const seen=new Set([ans]),w=[];
+  const cand=shuffle([ans+1,ans-1,ans+2,ans-2,-ans,2*ans,ans+5,ans-5,ans+10,ans-10,ans+3,ans-3]);
+  for(const c of cand){if(w.length===3)break;if(!seen.has(c)){seen.add(c);w.push(c);}}
+  while(w.length<3){const c=ans+ri(1,30)*(ri(0,1)?1:-1);if(!seen.has(c)){seen.add(c);w.push(c);}}
+  return mk(q,topic,fmt(ans),w.map(fmt),e);
+}
+function fracMC(q,topic,n,d,e){
+  if(d<0){n=-n;d=-d;}const g=gcd(n,d)||1;n/=g;d/=g;
+  const key=(a,b)=>{if(b<0){a=-a;b=-b;}const g2=gcd(a,b)||1;return (a/g2)+'/'+(b/g2);};
+  const seen=new Set([key(n,d)]),w=[];
+  const cand=shuffle([[n+1,d],[n-1,d],[n,d+1],[n,d-1],[d,n],[-n,d],[2*n,d],[n,2*d]]);
+  for(const[a,b]of cand){if(w.length===3)break;if(!b||!a&&!n)continue;
+    const k=key(a,b);if(!seen.has(k)){seen.add(k);w.push(frq(a,b));}}
+  while(w.length<3){const a=n+ri(1,6),b=d+ri(1,6);const k=key(a,b);
+    if(!seen.has(k)){seen.add(k);w.push(frq(a,b));}}
+  return mk(q,topic,frq(n,d),w,e);
+}
+/* linear-expression answer px+q */
+function linMC(qs,topic,p,q,e,v,pre){v=v||X;pre=pre||'';
+  const f=(a,b)=>pre+linEx(a,b,v);
+  const cands=shuffle([[p+1,q],[p-1,q],[p,q+1],[p,q-1],[-p,q],[p,-q],[p+2,q-2]]);
+  return mk(qs,topic,f(p,q),cands.map(c=>f(c[0],c[1])),e);
+}
+const GENS={};
+const reg=(u,f)=>{(GENS[u]=GENS[u]||[]).push(f);};
+const genQ=u=>pick(GENS[u])();
+/* ============ 中学1年 ============ */
+reg('j1',()=>{const t='正負の数';const v=ri(0,3);
+  if(v===0){const a=ri(-9,9),b=ri(-9,-1),op=pick(['+',M]);
+    const ans=op==='+'?a+b:a-b;
+    return numMC(`${fm(a)} ${op} ${pn(b)} を計算せよ。`,t,ans,
+      `負の数の${op==='+'?'加法':'減法'}。${fm(a)} ${op} (${fm(b)}) = <b>${fm(ans)}</b>`);}
+  if(v===1){const a=ri(2,9)*pick([1,-1]),b=ri(2,9)*pick([1,-1]);
+    return numMC(`${pn(a)} × ${pn(b)} を計算せよ。`,t,a*b,
+      `同符号の積は正、異符号の積は負。絶対値の積は ${Math.abs(a*b)}。答えは <b>${fm(a*b)}</b>`);}
+  if(v===2){const b=ri(2,9)*pick([1,-1]),q=ri(2,9)*pick([1,-1]),a=b*q;
+    return numMC(`${pn(a)} ÷ ${pn(b)} を計算せよ。`,t,q,
+      `${fm(a)} ÷ (${fm(b)}) = <b>${fm(q)}</b>。符号のルールは乗法と同じ。`);}
+  const a=ri(2,5),neg=ri(0,1);
+  const ans=neg?-(a*a):a*a;
+  const qs=neg?`${M}${a}${sup(2)}`:`(${M}${a})${sup(2)}`;
+  return numMC(`${qs} を計算せよ。`,t,ans,
+    neg?`${M}${a}² は「${a}² にマイナスをつけたもの」なので <b>${fm(ans)}</b>`
+       :`(${M}${a})² = (${M}${a})×(${M}${a}) = <b>${fm(ans)}</b>`);});
+reg('j1',()=>{const t='文字式の計算';
+  if(ri(0,1)){const a=ri(2,7),b=ri(1,9),c=ri(-7,-2),d=ri(-9,9)||3;
+    const p=a+c,q=b+d;
+    return linMC(`${poly([a,X],[b,''],[c,X],[d,''])} を計算せよ。`,t,p,q,
+      `${X}の項: ${fm(a)}${X} ${c<0?M:'+'} ${fm(Math.abs(c))}${X} = ${fm(p)}${X}、数の項: ${fm(b)} ${d<0?M:'+'} ${fm(Math.abs(d))} = ${fm(q)}。答えは <b>${linEx(p,q)}</b>`);}
+  const a=ri(2,4),b=ri(2,5),c=ri(-5,-1),d=ri(-4,-2),e2=ri(1,4),f=ri(-5,5)||2;
+  const p=a*b+d*e2,q=a*c+d*f;
+  return linMC(`${fm(a)}(${linEx(b,c)}) ${M} ${fm(-d)}(${linEx(e2,f)}) を計算せよ。`,t,p,q,
+    `分配法則でかっこを外す: ${linEx(a*b,a*c)} ${d*e2<0?M:'+'} ${fm(Math.abs(d*e2))}${X} ${d*f<0?M:'+'} ${fm(Math.abs(d*f))} = <b>${linEx(p,q)}</b>`);});
+reg('j1',()=>{const t='一次方程式';
+  const x=ri(-6,6)||7,a=ri(2,6);let c=ri(-3,4);if(c===a)c=a-1;
+  const d=ri(-9,9),b=d+(c-a)*x;
+  return numMC(`方程式 ${linEx(a,b)} = ${linEx(c,d)} を解け。`,t,x,
+    `移項して ${fm(a-c)}${X} = ${fm(d-b)}、両辺を ${fm(a-c)} で割って <b>${X} = ${fm(x)}</b>`,
+    n=>`${X} = ${fm(n)}`);});
+reg('j1',()=>{const t='比例・反比例';
+  if(ri(0,1)){const a=ri(2,6)*pick([1,-1]),p=ri(1,6),q=a*p;
+    const f=k=>`${Y} = ${k===1?'':k===-1?M:fm(k)}${X}`;
+    return mk(`${Y} は ${X} に比例し、${X} = ${fm(p)} のとき ${Y} = ${fm(q)} である。${Y} を ${X} の式で表せ。`,t,
+      f(a),[f(a+1),f(a-1),f(-a),`${Y} = ${fr(fm(a),X)}`],
+      `比例定数は ${it('a')} = ${Y}÷${X} = ${fm(q)}÷${fm(p)} = ${fm(a)}。よって <b>${f(a)}</b>`);}
+  const p=ri(2,6),q=ri(2,6),a=p*q;
+  const divs=[];for(let i=1;i<=a;i++)if(a%i===0)divs.push(i);
+  const r=pick(divs.filter(x=>x!==p))||p;
+  return numMC(`${Y} は ${X} に反比例し、${X} = ${fm(p)} のとき ${Y} = ${fm(q)} である。${X} = ${fm(r)} のときの ${Y} の値を求めよ。`,t,a/r,
+    `比例定数は ${it('a')} = ${X}${Y} = ${fm(a)}。${Y} = ${fr(fm(a),X)} に ${X} = ${fm(r)} を代入して <b>${Y} = ${fm(a/r)}</b>`);});
+reg('j1',()=>{const t='平面図形・空間図形';const v=ri(0,3);
+  if(v===0){let r,th,c;do{r=pick([3,4,6,9,10,12]);th=pick([30,45,60,90,120,135,150,240]);c=r*r*th/360;}while(!Number.isInteger(c));
+    return numMC(`半径 ${fm(r)} cm、中心角 ${fm(th)}${DEG} のおうぎ形の面積を求めよ。`,t,c,
+      `面積 = π${it('r')}${sup(2)} × ${fr(fm(th),360)} = π × ${fm(r*r)} × ${frq(th,360)} = <b>${fm(c)}π cm²</b>`,
+      k=>`${fm(k)}π cm²`);}
+  if(v===1){const n=ri(5,10);
+    return numMC(`${fm(n)}角形の内角の和を求めよ。`,t,(n-2)*180,
+      `${it('n')}角形の内角の和 = 180° × (${it('n')} ${M} 2) = 180 × ${fm(n-2)} = <b>${fm((n-2)*180)}°</b>`,
+      k=>`${fm(k)}${DEG}`);}
+  if(v===2){const a=ri(30,80),b=ri(30,80);
+    return numMC(`三角形の2つの内角が ${fm(a)}${DEG}、${fm(b)}${DEG} のとき、残りの内角の大きさを求めよ。`,t,180-a-b,
+      `内角の和は180°なので 180 ${M} ${fm(a)} ${M} ${fm(b)} = <b>${fm(180-a-b)}°</b>`,
+      k=>`${fm(k)}${DEG}`);}
+  const r=ri(2,5),h=ri(3,9);
+  return numMC(`底面の半径 ${fm(r)} cm、高さ ${fm(h)} cm の円柱の体積を求めよ。`,t,r*r*h,
+    `体積 = 底面積 × 高さ = π × ${fm(r)}² × ${fm(h)} = <b>${fm(r*r*h)}π cm³</b>`,
+    k=>`${fm(k)}π cm³`);});
+
+/* ============ 中学2年 ============ */
+reg('j2',()=>{const t='式の計算';
+  if(ri(0,1)){const a=ri(2,5),b=ri(-5,5)||2,c=ri(-4,4)||-3,d=ri(-5,5)||4,sub=ri(0,1);
+    const p=sub?a-c:a+c,q=sub?b-d:b+d;
+    const f=(m,n2)=>poly([m,X],[n2,Y]);
+    const cands=shuffle([[p+1,q],[p-1,q],[p,q+1],[p,q-1],[a+c,b+d],[a-c,b-d]]);
+    return mk(`(${f(a,b)}) ${sub?M:'+'} (${f(c,d)}) を計算せよ。`,t,f(p,q),cands.map(z=>f(z[0],z[1])),
+      `${sub?'ひく式の符号を全て変えて':'そのままかっこを外して'}同類項をまとめる: <b>${f(p,q)}</b>`);}
+  const xv=ri(-4,4)||2,yv=ri(-4,4)||-3,p=ri(2,5),q=ri(-5,-2);
+  return numMC(`${X} = ${fm(xv)}、${Y} = ${fm(yv)} のとき、${poly([p,X],[q,Y])} の値を求めよ。`,t,p*xv+q*yv,
+    `代入して ${fm(p)}×(${fm(xv)}) ${q<0?M:'+'} ${fm(Math.abs(q))}×(${fm(yv)}) = ${fm(p*xv)} ${q*yv<0?M:'+'} ${fm(Math.abs(q*yv))} = <b>${fm(p*xv+q*yv)}</b>`);});
+reg('j2',()=>{const t='連立方程式';
+  const x=ri(-4,4)||2,y=ri(-4,4)||-1;
+  let a1=ri(1,3),b1=ri(1,3),a2=ri(1,3),b2=-ri(1,3);
+  if(a1*b2-a2*b1===0)a2+=1;
+  const c1=a1*x+b1*y,c2=a2*x+b2*y;
+  const eq=(a,b,c)=>`${poly([a,X],[b,Y])} = ${fm(c)}`;
+  const f=(p,q)=>`${X} = ${fm(p)}, ${Y} = ${fm(q)}`;
+  return mk(`連立方程式 ${eq(a1,b1,c1)}、${eq(a2,b2,c2)} を解け。`,t,
+    f(x,y),[f(y,x),f(-x,y),f(x,-y),f(x+1,y-1)],
+    `加減法で ${Y} を消去すると ${X} = ${fm(x)}。代入して ${Y} = ${fm(y)}。<b>${f(x,y)}</b>`);});
+reg('j2',()=>{const t='一次関数';
+  if(ri(0,1)){const a=ri(1,4)*pick([1,-1]),p=ri(-4,4)||1,q0=ri(-5,5);
+    const b=q0,q=a*p+b;
+    const f=(m,n2)=>`${Y} = ${linEx(m,n2)}`;
+    return mk(`傾きが ${fm(a)} で、点 (${fm(p)}, ${fm(q)}) を通る一次関数の式を求めよ。`,t,
+      f(a,b),[f(a,b+1),f(a,b-1),f(-a,b),f(a+1,b)],
+      `${Y} = ${fm(a)}${X} + ${it('b')} に (${fm(p)}, ${fm(q)}) を代入: ${fm(q)} = ${fm(a*p)} + ${it('b')} より ${it('b')} = ${fm(b)}。<b>${f(a,b)}</b>`);}
+  const a=ri(1,4)*pick([1,-1]),b=ri(-5,5),p1=ri(-4,-1),p2=ri(1,4);
+  const q1=a*p1+b,q2=a*p2+b;
+  return numMC(`2点 (${fm(p1)}, ${fm(q1)})、(${fm(p2)}, ${fm(q2)}) を通る直線の傾きを求めよ。`,t,a,
+    `傾き = ${fr(Y+'の増加量',X+'の増加量')} = ${fr(`${fm(q2)} ${M} ${pn(q1)}`,`${fm(p2)} ${M} ${pn(p1)}`)} = <b>${fm(a)}</b>`);});
+reg('j2',()=>{const t='図形の性質と角';const v=ri(0,2);
+  if(v===0){const a=ri(30,75),b=ri(30,75);
+    return numMC(`三角形の内角のうち2つが ${fm(a)}${DEG} と ${fm(b)}${DEG} のとき、この三角形の外角のうち、残りの内角に隣り合う外角の大きさを求めよ。`,t,a+b,
+      `三角形の外角は、それと隣り合わない2つの内角の和に等しい: ${fm(a)} + ${fm(b)} = <b>${fm(a+b)}°</b>`,
+      k=>`${fm(k)}${DEG}`);}
+  if(v===1){const n=pick([5,6,8,9,10,12]);const inner=ri(0,1);
+    const ans=inner?180-360/n:360/n;
+    return numMC(`正${fm(n)}角形の1つの${inner?'内角':'外角'}の大きさを求めよ。`,t,ans,
+      `外角の和は360°なので1つの外角は 360÷${fm(n)} = ${fm(360/n)}°。${inner?`内角は 180 ${M} ${fm(360/n)} = <b>${fm(ans)}°</b>`:`<b>${fm(ans)}°</b>`}`,
+      k=>`${fm(k)}${DEG}`);}
+  const a=ri(15,60)*2;
+  return numMC(`頂角が ${fm(a)}${DEG} の二等辺三角形の底角の大きさを求めよ。`,t,(180-a)/2,
+    `底角は等しいので (180 ${M} ${fm(a)}) ÷ 2 = <b>${fm((180-a)/2)}°</b>`,
+    k=>`${fm(k)}${DEG}`);});
+reg('j2',()=>{const t='確率';
+  if(ri(0,1)){const k=ri(5,9),c=6-Math.abs(7-k);
+    return fracMC(`大小2つのさいころを同時に投げるとき、出る目の和が ${fm(k)} になる確率を求めよ。`,t,c,36,
+      `目の出方は全部で36通り。和が ${fm(k)} になるのは ${fm(c)} 通りなので <b>${frq(c,36)}</b>`);}
+  const n=ri(2,3),k2=ri(1,n);
+  const C=(n2,r)=>{let s=1;for(let i=0;i<r;i++)s=s*(n2-i)/(i+1);return Math.round(s);};
+  const c=C(n,k2),d=2**n;
+  return fracMC(`${fm(n)}枚の硬貨を同時に投げるとき、表がちょうど ${fm(k2)} 枚出る確率を求めよ。`,t,c,d,
+    `出方は全部で 2${sup(n)} = ${fm(d)} 通り。表が ${fm(k2)} 枚になるのは ${fm(c)} 通りなので <b>${frq(c,d)}</b>`);});
+reg('j2',()=>{const t='データの活用';
+  const base=ri(5,12);
+  const data=[base,base+ri(1,3),base+ri(4,5),base+ri(6,7),base+ri(8,9),base+ri(10,12),base+ri(13,15)];
+  const ask=ri(0,3);
+  const q1=data[1],med=data[3],q3=data[5],iqr=q3-q1;
+  const ans=[med,q1,q3,iqr][ask];
+  const name=['中央値(第2四分位数)','第1四分位数','第3四分位数','四分位範囲'][ask];
+  return numMC(`次のデータは7人の小テストの得点である。<br><span class="dt">${data.join(',&nbsp; ')}</span><br>このデータの${name}を求めよ。`,t,ans,
+    `小さい順に並んだ7個のデータでは、中央値は4番目(${fm(med)})、第1四分位数は下位3個の中央値(${fm(q1)})、第3四分位数は上位3個の中央値(${fm(q3)})。四分位範囲 = ${fm(q3)} ${M} ${fm(q1)} = ${fm(iqr)}。答えは <b>${fm(ans)}</b>`);});
+/* ============ 中学3年 ============ */
+const quadEx=(b,c)=>poly([1,X2],[b,X],[c,'']);
+const factEx=(a,b)=>{if(a>b)[a,b]=[b,a];
+  if(a===b)return `(${linEx(1,a)})${sup(2)}`;
+  return `(${linEx(1,a)})(${linEx(1,b)})`;};
+reg('j3',()=>{const t='式の展開';const v=ri(0,2);
+  if(v===0){const a=ri(-6,6)||2,b=ri(-6,6)||-3;
+    const s=a+b,p=a*b;
+    const cands=shuffle([[s,-p],[-s,p],[s+1,p],[s,p+1],[a-b||s+2,-a*b]]);
+    return mk(`(${linEx(1,a)})(${linEx(1,b)}) を展開せよ。`,t,quadEx(s,p),cands.map(z=>quadEx(z[0],z[1])),
+      `(${X}+${it('a')})(${X}+${it('b')}) = ${X}² + (${it('a')}+${it('b')})${X} + ${it('ab')}。和は ${fm(s)}、積は ${fm(p)}。<b>${quadEx(s,p)}</b>`);}
+  if(v===1){const a=ri(-6,6)||3;
+    const cands=shuffle([[2*a,-a*a],[-2*a,a*a],[a,a*a],[2*a,2*a],[0,a*a]]);
+    return mk(`(${linEx(1,a)})${sup(2)} を展開せよ。`,t,quadEx(2*a,a*a),cands.map(z=>quadEx(z[0],z[1])),
+      `(${X}+${it('a')})² = ${X}² + 2${it('a')}${X} + ${it('a')}²。<b>${quadEx(2*a,a*a)}</b>`);}
+  const a=ri(2,8);
+  const cands=shuffle([[0,a*a],[2*a,-a*a],[-2*a,-a*a],[a,-a*a]]);
+  return mk(`(${linEx(1,a)})(${linEx(1,-a)}) を展開せよ。`,t,quadEx(0,-a*a),cands.map(z=>quadEx(z[0],z[1])),
+    `和と差の積: (${X}+${it('a')})(${X}${M}${it('a')}) = ${X}² ${M} ${it('a')}²。<b>${quadEx(0,-a*a)}</b>`);});
+reg('j3',()=>{const t='因数分解';
+  const v=ri(0,2);
+  let a,b;
+  if(v===0){a=ri(-6,6)||2;do{b=ri(-6,6)||-3;}while(b===a);}
+  else if(v===1){a=ri(2,7)*pick([1,-1]);b=a;}
+  else{a=ri(2,8);b=-a;}
+  const s=a+b,p=a*b;
+  const wrongs=shuffle([factEx(-a,-b),factEx(a,-b),factEx(-a,b),factEx(a+1,b-1)]).filter(w=>w!==factEx(a,b));
+  return mk(`${quadEx(s,p)} を因数分解せよ。`,t,factEx(a,b),wrongs,
+    `積が ${fm(p)}、和が ${fm(s)} になる2数は ${fm(a)} と ${fm(b)}。<b>${factEx(a,b)}</b>`);});
+reg('j3',()=>{const t='平方根';const v=ri(0,3);
+  if(v===0){const k=ri(2,5),m=pick([2,3,5,6,7]);
+    const f=(a,b)=>srt(a,b);
+    return mk(`${rt(k*k*m)} を簡単にせよ。`,t,f(k,m),[f(k+1,m),f(k-1,m)||f(2,m),f(m,k),f(k,m+1)],
+      `${fm(k*k*m)} = ${fm(k*k)} × ${fm(m)} なので ${rt(k*k*m)} = <b>${srt(k,m)}</b>`);}
+  if(v===1){const a=pick([2,3,5,6]),c=ri(2,4);
+    const b=a*c*c;
+    return mk(`${rt(a)} × ${rt(b)} を計算せよ。`,t,fm(a*c),
+      [srt(c,a),fm(a*c*c),fm(a*c+a),srt(a,c)],
+      `${rt(a)} × ${rt(b)} = ${rt(a*b)} = ${rt(`${fm(a*c)}²`)} = <b>${fm(a*c)}</b>`);}
+  if(v===2){const b=pick([2,3,5]),c=ri(1,3);
+    const a=b*c;
+    const f=(k,m)=>srt(k,m);
+    return mk(`${fr(fm(a),rt(b))} の分母を有理化せよ。`,t,f(c,b),[f(c+1,b),f(a,b),f(c,b+1),fr(srt(c,b),fm(b))],
+      `分母・分子に ${rt(b)} を掛ける: ${fr(fm(a)+rt(b),fm(b))} = <b>${srt(c,b)}</b>`);}
+  const k=pick([10,15,20,30,40,50,60,70,80,90]);
+  const ans=Math.floor(Math.sqrt(k));
+  return numMC(`${rt(k)} の整数部分を求めよ。`,t,ans,
+    `${fm(ans*ans)} < ${fm(k)} < ${fm((ans+1)*(ans+1))} より ${fm(ans)} < ${rt(k)} < ${fm(ans+1)}。整数部分は <b>${fm(ans)}</b>`);});
+reg('j3',()=>{const t='二次方程式';const v=ri(0,2);
+  if(v===0){const r1=ri(-6,6)||2;let r2=ri(-6,6)||-3;if(r2===r1)r2=r1-2;
+    const lo=Math.min(r1,r2),hi=Math.max(r1,r2);
+    const f=(p,q)=>`${X} = ${fm(p)}, ${fm(q)}`;
+    return mk(`二次方程式 ${quadEx(-(r1+r2),r1*r2)} = 0 を解け。`,t,
+      f(lo,hi),[f(-lo,-hi),f(lo,-hi),f(-lo,hi),f(lo-1,hi+1)],
+      `因数分解して (${linEx(1,-lo)})(${linEx(1,-hi)}) = 0。<b>${f(lo,hi)}</b>`);}
+  if(v===1){const m=ri(-5,5)||2,k=pick([2,3,5,6,7,10]);
+    const f=(mm,kk)=>`${X} = ${fm(mm)} ± ${rt(kk)}`;
+    return mk(`二次方程式 (${linEx(1,-m)})${sup(2)} = ${fm(k)} を解け。`,t,
+      f(m,k),[f(-m,k),f(m,k+1),f(m+1,k),`${X} = ±${srt(1,k)} ${m<0?M:'+'} ${fm(Math.abs(m))}`],
+      `${linEx(1,-m)} = ±${rt(k)} より <b>${f(m,k)}</b>`);}
+  const b=ri(1,5),D=pick([5,13,17,21,29,33]);
+  const c=(b*b-D)/4;
+  const bb=Number.isInteger(c)?b:b+1;
+  const c2=Number.isInteger(c)?c:((bb*bb-D)/4);
+  const f=(nb,d)=>`${X} = ${fr(`${fm(-nb)} ± ${rt(d)}`,2)}`;
+  return mk(`二次方程式 ${quadEx(bb,c2)} = 0 を解け。`,t,
+    f(bb,D),[f(-bb,D),f(bb,D+4),f(bb,bb*bb+4*Math.abs(c2)),`${X} = ${fr(`${fm(bb)} ± ${rt(D)}`,2)}`],
+    `解の公式より ${X} = ${fr(`${fm(-bb)} ± ${rt(`${fm(bb)}² ${M} 4×${pn(c2)}`)}`,2)} = <b>${f(bb,D)}</b>`);});
+reg('j3',()=>{const t='関数 y=ax²';const v=ri(0,2);
+  if(v===0){const a=ri(1,4)*pick([1,-1]),p=ri(1,4),q=a*p*p;
+    const f=k=>`${Y} = ${k===1?'':k===-1?M:fm(k)}${X2}`;
+    return mk(`${Y} は ${X}${sup(2)} に比例し、点 (${fm(p)}, ${fm(q)}) を通る。${Y} を ${X} の式で表せ。`,t,
+      f(a),[f(a+1),f(a-1),f(-a),`${Y} = ${fm(a*p)}${X}`],
+      `${Y} = ${it('a')}${X}² に代入: ${fm(q)} = ${it('a')}×${fm(p*p)} より ${it('a')} = ${fm(a)}。<b>${f(a)}</b>`);}
+  if(v===1){const a=ri(1,3)*pick([1,-1]),p=ri(1,4),q=p+ri(1,4);
+    return numMC(`関数 ${Y} = ${a===1?'':a===-1?M:fm(a)}${X2} で、${X} の値が ${fm(p)} から ${fm(q)} まで増加するときの変化の割合を求めよ。`,t,a*(p+q),
+      `変化の割合 = ${it('a')}(${it('p')}+${it('q')}) = ${fm(a)}×(${fm(p)}+${fm(q)}) = <b>${fm(a*(p+q))}</b>`);}
+  const a=ri(1,3),p=ri(-4,-1),q=ri(1,4);
+  const hi=a*Math.max(p*p,q*q);
+  const f=(lo,h)=>`${fm(lo)} ≦ ${Y} ≦ ${fm(h)}`;
+  return mk(`関数 ${Y} = ${a===1?'':fm(a)}${X2} について、${X} の変域が ${fm(p)} ≦ ${X} ≦ ${fm(q)} のときの ${Y} の変域を求めよ。`,t,
+    f(0,hi),[f(a*p*p,a*q*q),f(a*Math.min(p*p,q*q),hi),f(-hi,hi),f(0,hi+a)],
+    `変域に ${X} = 0 を含むので最小値は 0。最大値は |${X}| が大きい端 ${X} = ${fm(Math.abs(p)>=q?p:q)} で ${fm(hi)}。<b>${f(0,hi)}</b>`);});
+reg('j3',()=>{const t='三平方の定理・円・相似';const v=ri(0,3);
+  if(v===0){const tri=pick([[3,4,5],[5,12,13],[8,15,17],[6,8,10],[7,24,25],[9,12,15],[20,21,29]]);
+    const k=ri(0,1);
+    if(k===0)return numMC(`直角をはさむ2辺が ${fm(tri[0])} cm、${fm(tri[1])} cm の直角三角形の斜辺の長さを求めよ。`,t,tri[2],
+      `三平方の定理より 斜辺² = ${fm(tri[0])}² + ${fm(tri[1])}² = ${fm(tri[2]*tri[2])}。斜辺 = <b>${fm(tri[2])} cm</b>`,
+      n=>`${fm(n)} cm`);
+    return numMC(`斜辺が ${fm(tri[2])} cm、他の1辺が ${fm(tri[0])} cm の直角三角形の残りの辺の長さを求めよ。`,t,tri[1],
+      `${fm(tri[2])}² ${M} ${fm(tri[0])}² = ${fm(tri[1]*tri[1])} より <b>${fm(tri[1])} cm</b>`,
+      n=>`${fm(n)} cm`);}
+  if(v===1){const a=ri(2,8);
+    const sq=ri(0,1);
+    if(sq)return mk(`1辺が ${fm(a)} cm の正方形の対角線の長さを求めよ。`,t,
+      `${srt(a,2)} cm`,[`${srt(a,3)} cm`,`${fm(2*a)} cm`,`${srt(2,a===2?3:a)} cm`,`${srt(a+1,2)} cm`],
+      `対角線 = 1辺 × ${rt(2)} = <b>${srt(a,2)} cm</b>`);
+    return mk(`1辺が ${fm(2*a)} cm の正三角形の高さを求めよ。`,t,
+      `${srt(a,3)} cm`,[`${srt(a,2)} cm`,`${srt(2*a,3)} cm`,`${fm(a)} cm`,`${srt(a+1,3)} cm`],
+      `高さ = 1辺 × ${fr(rt(3),2)} = <b>${srt(a,3)} cm</b>`);}
+  if(v===2){const x=ri(20,80)*2;const cen=ri(0,1);
+    if(cen)return numMC(`円Oで、弧ABに対する中心角が ${fm(x)}${DEG} のとき、同じ弧に対する円周角の大きさを求めよ。`,t,x/2,
+      `円周角は中心角の半分: ${fm(x)} ÷ 2 = <b>${fm(x/2)}°</b>`,k=>`${fm(k)}${DEG}`);
+    return numMC(`円Oで、弧ABに対する円周角が ${fm(x/2)}${DEG} のとき、同じ弧に対する中心角の大きさを求めよ。`,t,x,
+      `中心角は円周角の2倍: ${fm(x/2)} × 2 = <b>${fm(x)}°</b>`,k=>`${fm(k)}${DEG}`);}
+  const m=ri(2,5);let n=ri(2,5);if(n===m)n=m+1;
+  const vol=ri(0,1);
+  const f=(p,q)=>`${fm(p)} : ${fm(q)}`;
+  const ans=vol?f(m**3,n**3):f(m*m,n*n);
+  return mk(`相似比が ${fm(m)} : ${fm(n)} の2つの相似な${vol?'立体の体積比':'図形の面積比'}を求めよ。`,t,
+    ans,[f(m,n),vol?f(m*m,n*n):f(m**3,n**3),f(2*m,2*n),f(m*m+1,n*n)],
+    `相似比 ${it('m')}:${it('n')} のとき面積比は ${it('m')}²:${it('n')}²、体積比は ${it('m')}³:${it('n')}³。<b>${ans}</b>`);});
+
+/* ============ 高校受験対策 ============ */
+reg('jex',()=>{const t='式の値(入試典型)';
+  const a=pick([2,3,5,6,7]),m=ri(1,4),c=ri(-5,5);
+  const ans=a-m*m+c;
+  return numMC(`${X} = ${rt(a)} + ${fm(m)} のとき、${quadEx(-2*m,c)} の値を求めよ。`,t,ans,
+    `${X} ${M} ${fm(m)} = ${rt(a)} の両辺を2乗すると ${X}² ${M} ${fm(2*m)}${X} + ${fm(m*m)} = ${fm(a)}。よって ${X}² ${M} ${fm(2*m)}${X} = ${fm(a-m*m)}。求める値は ${fm(a-m*m)} ${c<0?M:'+'} ${fm(Math.abs(c))} = <b>${fm(ans)}</b>`);});
+reg('jex',()=>{const t='放物線と直線';
+  const half=ri(0,1);
+  let a=half?.5:ri(1,2),p,q;
+  if(half){p=-2*ri(1,2);q=2*ri(1,3);}else{p=-ri(1,3);q=ri(1,3);if(q===-p)q++;}
+  const s=a*(p+q),b=-a*p*q;
+  const f=(m,n2)=>`${Y} = ${linEx(m,n2)}`;
+  const aStr=half?fr(1,2):(a===1?'':fm(a));
+  return mk(`放物線 ${Y} = ${aStr}${X2} 上に2点 A、B があり、${X} 座標はそれぞれ ${fm(p)}、${fm(q)} である。直線 AB の式を求めよ。`,t,
+    f(s,b),[f(s,-b),f(-s,b),f(s+1,b),f(s,b+1)],
+    `A(${fm(p)}, ${fm(a*p*p)})、B(${fm(q)}, ${fm(a*q*q)})。傾き = ${it('a')}(${it('p')}+${it('q')}) = ${fm(s)}、切片は ${M}${it('apq')} = ${fm(b)}。<b>${f(s,b)}</b>`);});
+reg('jex',()=>{const t='相似の利用';
+  const m=ri(1,3),n=ri(1,3),k=ri(2,4);
+  const BC=(m+n)*k,DE=m*k;
+  return numMC(`△ABC の辺 AB、AC 上にそれぞれ点 D、E があり、DE ∥ BC である。AD : DB = ${fm(m)} : ${fm(n)}、BC = ${fm(BC)} cm のとき、DE の長さを求めよ。`,t,DE,
+    `DE ∥ BC より △ADE ∽ △ABC で相似比は AD : AB = ${fm(m)} : ${fm(m+n)}。DE = ${fm(BC)} × ${frq(m,m+n)} = <b>${fm(DE)} cm</b>`,
+    x=>`${fm(x)} cm`);});
+reg('jex',()=>{const t='空間図形(三平方)';
+  const box=pick([[1,2,2,3],[2,3,6,7],[1,4,8,9],[4,4,7,9],[2,6,9,11],[6,6,7,11],[2,4,4,6]]);
+  return numMC(`縦 ${fm(box[0])} cm、横 ${fm(box[1])} cm、高さ ${fm(box[2])} cm の直方体の対角線の長さを求めよ。`,t,box[3],
+    `対角線 = ${rt(`${it('a')}²+${it('b')}²+${it('c')}²`)} = ${rt(`${box[0]*box[0]}+${box[1]*box[1]}+${box[2]*box[2]}`)} = ${rt(box[3]*box[3])} = <b>${fm(box[3])} cm</b>`,
+    x=>`${fm(x)} cm`);});
+reg('jex',()=>{const t='規則性';
+  const d=ri(2,5),a1=ri(1,6);
+  if(ri(0,1)){const k=ri(8,20);
+    return numMC(`${fm(a1)}, ${fm(a1+d)}, ${fm(a1+2*d)}, ${fm(a1+3*d)}, … と規則的に数が並んでいる。${fm(k)} 番目の数を求めよ。`,t,a1+(k-1)*d,
+      `${fm(d)} ずつ増えるので ${it('n')} 番目は ${fm(a1)} + ${fm(d)}(${it('n')} ${M} 1)。${it('n')} = ${fm(k)} で <b>${fm(a1+(k-1)*d)}</b>`);}
+  const f=(p,q)=>linEx(p,q,N_);
+  return mk(`${fm(a1)}, ${fm(a1+d)}, ${fm(a1+2*d)}, ${fm(a1+3*d)}, … と規則的に数が並んでいる。${it('n')} 番目の数を ${it('n')} の式で表せ。`,t,
+    f(d,a1-d),[f(d,a1),f(d+1,a1-d),f(a1,d),f(d,a1-d-1)],
+    `初めの数 ${fm(a1)} に ${fm(d)} を (${it('n')}${M}1) 回加えるので ${fm(d)}${it('n')} + ${fm(a1-d)}。<b>${f(d,a1-d)}</b>`);});
+reg('jex',()=>{const t='確率(入試型)';
+  const a=ri(2,3),b=ri(2,4);
+  const N=a+b,tot=N*(N-1)/2;
+  if(ri(0,1)){const c=a*(a-1)/2;
+    return fracMC(`赤玉 ${fm(a)} 個、白玉 ${fm(b)} 個が入った袋から同時に2個取り出すとき、2個とも赤玉である確率を求めよ。`,t,c,tot,
+      `取り出し方は全部で ${fm(tot)} 通り。赤2個の選び方は ${fm(c)} 通り。<b>${frq(c,tot)}</b>`);}
+  const c=a*b;
+  return fracMC(`赤玉 ${fm(a)} 個、白玉 ${fm(b)} 個が入った袋から同時に2個取り出すとき、色が異なる確率を求めよ。`,t,c,tot,
+    `取り出し方は全部で ${fm(tot)} 通り。赤1個・白1個の選び方は ${fm(a)}×${fm(b)} = ${fm(c)} 通り。<b>${frq(c,tot)}</b>`);});
+/* ============ 数学Ⅰ ============ */
+reg('m1',()=>{const t='数と式';const v=ri(0,2);
+  if(v===0){const a=ri(1,3),c=ri(1,3),b=ri(1,5)*pick([1,-1]),d=ri(1,5)*pick([1,-1]);
+    const P=a*c,Q=a*d+b*c,R=b*d;
+    const f=(p,q,r2,s2)=>`(${linEx(p,q)})(${linEx(r2,s2)})`;
+    const qs=poly([P,X2],[Q,X],[R,'']);
+    return mk(`${qs} を因数分解せよ。`,t,f(a,b,c,d),
+      [f(a,-b,c,-d),f(a,d,c,b),f(a,b,c,-d),f(a,-b,c,d)],
+      `たすき掛け: ${fm(a)}×${fm(c)} = ${fm(P)}、${fm(a)}×${pn(d)} + ${pn(b)}×${fm(c)} = ${fm(Q)}、${pn(b)}×${pn(d)} = ${fm(R)}。<b>${f(a,b,c,d)}</b>`);}
+  if(v===1){const pair=pick([[3,2],[5,2],[5,3],[7,5],[6,5],[7,6],[8,7],[2,1],[3,1],[5,1]]);
+    const[a,b]=pair,diff=a-b;
+    const sq=n=>Number.isInteger(Math.sqrt(n))?fm(Math.sqrt(n)):rt(n);
+    const f=(s1,s2,sign)=>diff===1?`${sq(s1)} ${sign} ${sq(s2)}`:fr(`${sq(s1)} ${sign} ${sq(s2)}`,fm(diff));
+    return mk(`${fr(1,`${sq(a)} + ${sq(b)}`)} の分母を有理化せよ。`,t,
+      f(a,b,M),[f(a,b,'+'),f(b,a,M),diff===1?fr(`${sq(a)} ${M} ${sq(b)}`,2):`${sq(a)} ${M} ${sq(b)}`],
+      `分母・分子に ${sq(a)} ${M} ${sq(b)} を掛けると分母は ${fm(a)} ${M} ${fm(b)} = ${fm(diff)}。<b>${f(a,b,M)}</b>`);}
+  const p=ri(2,6)*pick([1,-1]),q=ri(1,5)*pick([1,-1]);
+  const cube=ri(0,1);
+  const ans=cube?p*p*p-3*p*q:p*p-2*q;
+  return numMC(`${X} + ${Y} = ${fm(p)}、${X}${Y} = ${fm(q)} のとき、${X}${sup(cube?3:2)} + ${Y}${sup(cube?3:2)} の値を求めよ。`,t,ans,
+    cube?`${X}³+${Y}³ = (${X}+${Y})³ ${M} 3${X}${Y}(${X}+${Y}) = ${pn(p)}³ ${M} 3×${pn(q)}×${pn(p)} = <b>${fm(ans)}</b>`
+        :`${X}²+${Y}² = (${X}+${Y})² ${M} 2${X}${Y} = ${pn(p)}² ${M} 2×${pn(q)} = <b>${fm(ans)}</b>`);});
+reg('m1',()=>{const t='二次関数';const v=ri(0,2);
+  if(v===0){const a=ri(1,4)*pick([1,-1]),b=ri(-5,5);
+    const c=b+a*a;
+    const f=(p,q)=>`(${fm(p)}, ${fm(q)})`;
+    return mk(`放物線 ${Y} = ${quadEx(-2*a,c)} の頂点の座標を求めよ。`,t,
+      f(a,b),[f(-a,b),f(a,-b),f(2*a,b),f(a,c)],
+      `平方完成: ${Y} = (${linEx(1,-a)})² ${b<0?M:'+'} ${fm(Math.abs(b))}。頂点は <b>${f(a,b)}</b>`);}
+  if(v===1){const p=ri(1,4)*pick([1,-1]),q=ri(1,5)*pick([1,-1]);
+    const f=(pp,qq)=>`${Y} = (${X} ${pp<0?'+':M} ${fm(Math.abs(pp))})${sup(2)} ${qq<0?M:'+'} ${fm(Math.abs(qq))}`;
+    return mk(`放物線 ${Y} = ${X2} を ${X} 軸方向に ${fm(p)}、${Y} 軸方向に ${fm(q)} だけ平行移動した放物線の式を求めよ。`,t,
+      f(p,q),[f(-p,q),f(p,-q),f(-p,-q),f(p+1,q)],
+      `${X} 方向に ${it('p')} 移動すると ${X} を ${X}${M}${it('p')} に置き換える。<b>${f(p,q)}</b>`);}
+  const a=ri(1,3),l=ri(-1,1),r=l+ri(2,3),vx=ri(l,r),c=ri(-4,4);
+  const min=c,fx=x=>a*(x-vx)*(x-vx)+c;
+  const askMax=ri(0,1);
+  const maxV=Math.max(fx(l),fx(r));
+  const ans=askMax?maxV:min;
+  return numMC(`関数 ${Y} = ${poly([a,X2],[-2*a*vx,X],[a*vx*vx+c,''])}（${fm(l)} ≦ ${X} ≦ ${fm(r)}）の${askMax?'最大値':'最小値'}を求めよ。`,t,ans,
+    `平方完成すると ${Y} = ${a===1?'':fm(a)}(${linEx(1,-vx)})² ${c<0?M:'+'} ${fm(Math.abs(c))}。軸 ${X} = ${fm(vx)} は定義域内なので最小値は ${fm(min)}、最大値は端点 ${X} = ${fm(fx(l)>=fx(r)?l:r)} で ${fm(maxV)}。答えは <b>${fm(ans)}</b>`);});
+reg('m1',()=>{const t='二次不等式';
+  const al=ri(-5,2);let be=ri(-2,5);if(be<=al)be=al+ri(1,4);
+  const gt=ri(0,1);
+  const fIn=`${fm(al)} < ${X} < ${fm(be)}`;
+  const fOut=`${X} < ${fm(al)}, ${fm(be)} < ${X}`;
+  const ans=gt?fOut:fIn;
+  return mk(`二次不等式 ${quadEx(-(al+be),al*be)} ${gt?'>':'<'} 0 を解け。`,t,
+    ans,[gt?fIn:fOut,`${fm(al)} ≦ ${X} ≦ ${fm(be)}`,`${X} < ${fm(be)}`,`${fm(-be)} < ${X} < ${fm(-al)}`],
+    `左辺 = (${linEx(1,-al)})(${linEx(1,-be)})。グラフが ${X} 軸と交わる点は ${fm(al)}, ${fm(be)} で、${gt?'外側':'内側'}が解。<b>${ans}</b>`);});
+reg('m1',()=>{const t='図形と計量(三角比)';const v=ri(0,3);
+  if(v===0){const tri=pick([[3,4,5],[5,12,13],[8,15,17],[7,24,25]]);
+    const obtuse=ri(0,1);
+    const ask=pick(['cos','tan']);
+    if(ask==='cos'){const n=obtuse?-tri[1]:tri[1];
+      return mk(`θ は${obtuse?'鈍角':'鋭角'}で sin θ = ${frq(tri[0],tri[2])} のとき、cos θ の値を求めよ。`,t,
+        frq(n,tri[2]),[frq(-n,tri[2]),frq(tri[0],tri[2]),frq(n,tri[1]),frq(obtuse?-tri[0]:tri[0],tri[1])],
+        `sin²θ + cos²θ = 1 より cos²θ = ${frq(tri[1]*tri[1],tri[2]*tri[2])}。${obtuse?'鈍角なので cos θ < 0':'鋭角なので cos θ > 0'}。<b>${frq(n,tri[2])}</b>`);}
+    const n=obtuse?-tri[0]:tri[0];
+    return mk(`θ は${obtuse?'鈍角':'鋭角'}で sin θ = ${frq(tri[0],tri[2])} のとき、tan θ の値を求めよ。`,t,
+      frq(n,tri[1]),[frq(-n,tri[1]),frq(tri[1],Math.abs(n)===tri[1]?tri[0]+1:n<0?-tri[0]:tri[0]),frq(n,tri[2]),frq(tri[2],tri[1])],
+      `cos θ = ${frq(obtuse?-tri[1]:tri[1],tri[2])} なので tan θ = ${fr('sin θ','cos θ')} = <b>${frq(n,tri[1])}</b>`);}
+  if(v===1){const[a,b,C,c]=pick([[3,8,60,7],[5,8,60,7],[7,15,60,13],[8,15,60,13],[3,5,120,7],[7,8,120,13]]);
+    return numMC(`△ABC で ${it('a')} = ${fm(a)}、${it('b')} = ${fm(b)}、C = ${fm(C)}${DEG} のとき、辺 ${it('c')} の長さを求めよ。`,t,c,
+      `余弦定理: ${it('c')}² = ${it('a')}² + ${it('b')}² ${M} 2${it('ab')} cos C = ${fm(a*a)} + ${fm(b*b)} ${C===60?M:'+'} ${fm(a*b)} = ${fm(c*c)}。<b>${it('c')} = ${fm(c)}</b>`);}
+  if(v===2){const A=pick([30,90,150]),a=ri(2,6)*2;
+    const R=A===90?a/2:a;
+    return numMC(`△ABC で A = ${fm(A)}${DEG}、${it('a')} = ${fm(a)} のとき、外接円の半径 R を求めよ。`,t,R,
+      `正弦定理: 2R = ${fr(it('a'),'sin A')} = ${fr(fm(a),`sin ${fm(A)}°`)} = ${fm(2*R)}。<b>R = ${fm(R)}</b>`);}
+  const C=pick([30,45,60,90,120,135,150]),ab=ri(2,6)*4;
+  const s=Math.sin(C*Math.PI/180);
+  let ans,ex;
+  if(C===90){ans=fm(ab/2);ex=`${frq(1,2)}×${fm(ab)}×1`;}
+  else if(C===30||C===150){ans=fm(ab/4);ex=`${frq(1,2)}×${fm(ab)}×${frq(1,2)}`;}
+  else if(C===60||C===120){ans=srt(ab/4,3);ex=`${frq(1,2)}×${fm(ab)}×${fr(rt(3),2)}`;}
+  else{ans=srt(ab/4,2);ex=`${frq(1,2)}×${fm(ab)}×${fr(rt(2),2)}`;}
+  const w=[fm(ab/2),srt(ab/4,3),fm(ab/4),srt(ab/4,2),srt(ab/2,3)].filter(x=>x!==ans);
+  return mk(`△ABC で ${it('ab')} = ${fm(ab)}（2辺の積）、はさむ角 C = ${fm(C)}${DEG} のとき、△ABC の面積 S を求めよ。`,t,ans,shuffle(w),
+    `S = ${fr(1,2)}${it('ab')} sin C = ${ex} = <b>${ans}</b>`);});
+reg('m1',()=>{const t='データの分析';
+  const sets=[[[-2,-1,0,1,2],2],[[-3,-1,0,1,3],4],[[-2,-2,0,2,2],3.2],[[-1,-1,0,1,1],0.8],[[-4,-1,0,1,4],6.8],[[-3,-2,0,2,3],5.2],[[-2,0,0,0,2],1.6]];
+  const[devs,va]=pick(sets);
+  const mean=ri(5,14);
+  const data=shuffle(devs.map(d=>mean+d));
+  const ask=ri(0,2);
+  if(ask===0)return numMC(`5個のデータ <span class="dt">${data.join(',&nbsp; ')}</span> の平均値を求めよ。`,t,mean,
+    `合計 ${fm(data.reduce((a,b)=>a+b,0))} ÷ 5 = <b>${fm(mean)}</b>`);
+  if(ask===1)return numMC(`5個のデータ <span class="dt">${data.join(',&nbsp; ')}</span> の分散を求めよ。`,t,va,
+    `平均は ${fm(mean)}。偏差の2乗の平均 = ${fr(devs.map(d=>`${fm(d*d)}`).join('+'),5)} = <b>${fm(va)}</b>`);
+  const med=devs.slice().sort((a,b)=>a-b)[2]+mean;
+  return numMC(`5個のデータ <span class="dt">${data.join(',&nbsp; ')}</span> の中央値を求めよ。`,t,med,
+    `小さい順に並べたときの3番目の値が中央値。<b>${fm(med)}</b>`);});
+reg('m1',()=>{const t='集合と命題';
+  const OPT=['必要十分条件である','十分条件であるが、必要条件ではない','必要条件であるが、十分条件ではない','必要条件でも十分条件でもない'];
+  const bank=[
+    [`${X} > 2`,`${X} > 0`,1,`${X}>2 ⇒ ${X}>0 は真、逆は偽(例: ${X}=1)`],
+    [`${X} = 3`,`${X}${sup(2)} = 9`,1,`${X}=3 ⇒ ${X}²=9 は真、逆は偽(${X}=${M}3)`],
+    [`${X}${sup(2)} = 1`,`${X} = 1`,2,`${X}=1 ⇒ ${X}²=1 は真だが、${X}²=1 ⇒ ${X}=1 は偽(${X}=${M}1)`],
+    ['四角形が正方形である','四角形が長方形である',1,'正方形 ⇒ 長方形 は真、逆は偽'],
+    [`実数 ${X} について ${X}${sup(2)} > 0`,`${X} ≠ 0`,0,`${X}²>0 ⇔ ${X}≠0`],
+    [`|${X}| = 2`,`${X} = 2`,2,`${X}=2 ⇒ |${X}|=2 は真、逆は偽(${X}=${M}2)`],
+    [`${X} > 0 かつ ${Y} > 0`,`${X} + ${Y} > 0`,1,'和が正でも両方正とは限らない(例: 3 と −1)'],
+    [`${X}${Y} = 0`,`${X} = 0`,2,`${X}=0 ⇒ ${X}${Y}=0 は真、逆は偽(${Y}=0 の場合)`],
+    ['整数 n が4の倍数である','整数 n が偶数である',1,'4の倍数 ⇒ 偶数 は真、逆は偽(例: 6)'],
+    ['三角形が正三角形である','三角形が二等辺三角形である',1,'正三角形 ⇒ 二等辺三角形 は真、逆は偽'],
+    [`${X}${sup(2)} + ${Y}${sup(2)} = 0`,`${X} = 0 かつ ${Y} = 0`,0,'実数では2乗の和が0 ⇔ 両方0'],
+  ];
+  const[p,q,a,ex]=pick(bank);
+  const idx=shuffle([0,1,2,3]);
+  return {q:`「${p}」は「${q}」であるための何か。最も適切なものを選べ。`,topic:t,
+    c:idx.map(i=>OPT[i]),a:idx.indexOf(a),e:`${ex}。よって<b>${OPT[a]}</b>`};});
+
+/* ============ 数学A ============ */
+const fact=n=>{let s=1;for(let i=2;i<=n;i++)s*=i;return s;};
+const nPr=(n,r)=>{let s=1;for(let i=0;i<r;i++)s*=n-i;return s;};
+const nCr=(n,r)=>Math.round(nPr(n,r)/fact(r));
+reg('mA',()=>{const t='場合の数';const v=ri(0,3);
+  if(v===0){const n=ri(5,8),r=ri(2,Math.min(4,n-1));
+    return numMC(`${fm(n)} 人から ${fm(r)} 人を選んで1列に並べる方法は何通りあるか。`,t,nPr(n,r),
+      `順列 ${fm(n)}P${fm(r)} = ${Array.from({length:r},(_,i)=>fm(n-i)).join('×')} = <b>${fm(nPr(n,r))} 通り</b>`);}
+  if(v===1){const n=ri(6,10),r=ri(2,4);
+    return numMC(`${fm(n)} 人から ${fm(r)} 人の代表を選ぶ方法は何通りあるか。`,t,nCr(n,r),
+      `組合せ ${fm(n)}C${fm(r)} = ${fr(`${fm(n)}P${fm(r)}`,`${fm(r)}!`)} = <b>${fm(nCr(n,r))} 通り</b>`);}
+  if(v===2){const n=ri(4,7);
+    return numMC(`${fm(n)} 人が円形のテーブルに着席する方法は何通りあるか。`,t,fact(n-1),
+      `円順列は (${it('n')} ${M} 1)! = ${fm(n-1)}! = <b>${fm(fact(n-1))} 通り</b>`);}
+  const w=pick([['AAABB',5,[3,2]],['AABBB',5,[2,3]],['AAABBB',6,[3,3]],['AABBCC',6,[2,2,2]],['AAAABB',6,[4,2]]]);
+  const ans=Math.round(fact(w[1])/w[2].reduce((s,k)=>s*fact(k),1));
+  return numMC(`${w[0]} の ${fm(w[1])} 文字${w[1]===6?'すべて':''}を1列に並べる方法は何通りあるか。`,t,ans,
+    `同じものを含む順列: ${fr(`${fm(w[1])}!`,w[2].map(k=>`${fm(k)}!`).join(''))} = <b>${fm(ans)} 通り</b>`);});
+reg('mA',()=>{const t='確率';const v=ri(0,2);
+  if(v===0){const n=ri(2,3);
+    const c=6**n-5**n;
+    return fracMC(`1個のさいころを ${fm(n)} 回投げるとき、少なくとも1回は6の目が出る確率を求めよ。`,t,c,6**n,
+      `余事象「1回も6が出ない」の確率は ${fr(`5${sup(n)}`,`6${sup(n)}`)} = ${frq(5**n,6**n)}。求める確率は 1 ${M} ${frq(5**n,6**n)} = <b>${frq(c,6**n)}</b>`);}
+  if(v===1){const n=ri(3,5),k=ri(1,n-1);
+    return fracMC(`1枚の硬貨を ${fm(n)} 回投げるとき、表がちょうど ${fm(k)} 回出る確率を求めよ。`,t,nCr(n,k),2**n,
+      `反復試行: ${fm(n)}C${fm(k)} × ${fr(1,`2${sup(n)}`)} = <b>${frq(nCr(n,k),2**n)}</b>`);}
+  const a=ri(2,4),b=ri(3,5);
+  const tot=nCr(a+b,2),c=nCr(b,2);
+  return fracMC(`当たり ${fm(a)} 本を含む ${fm(a+b)} 本のくじから同時に2本引くとき、少なくとも1本当たる確率を求めよ。`,t,tot-c,tot,
+    `余事象「2本ともはずれ」は ${fm(b)}C2 / ${fm(a+b)}C2 = ${frq(c,tot)}。求める確率は <b>${frq(tot-c,tot)}</b>`);});
+reg('mA',()=>{const t='整数の性質';const v=ri(0,3);
+  if(v===0){const g=pick([2,3,4,6]),p=pick([2,3,5]),q=pick([3,4,5,7]);
+    const a=g*p,b=g*q;
+    const askG=ri(0,1);
+    const G=gcd(a,b),L=a*b/G;
+    return numMC(`${fm(a)} と ${fm(b)} の${askG?'最大公約数':'最小公倍数'}を求めよ。`,t,askG?G:L,
+      `${fm(a)} = ${fm(G)}×${fm(a/G)}、${fm(b)} = ${fm(G)}×${fm(b/G)}。最大公約数は ${fm(G)}、最小公倍数は ${fm(G)}×${fm(a/G)}×${fm(b/G)} = ${fm(L)}。答えは <b>${fm(askG?G:L)}</b>`);}
+  if(v===1){const d=ri(9,31);
+    const bin=d.toString(2);
+    if(ri(0,1))return numMC(`2進法で表された数 ${bin}${sub2('(2)')} を10進法で表せ。`,t,d,
+      `${bin.split('').map((c2,i)=>c2==='1'?`2${sup(bin.length-1-i)}`:null).filter(Boolean).join(' + ')} = <b>${fm(d)}</b>`);
+    const f=x=>`${x.toString(2)}${sub2('(2)')}`;
+    return mk(`10進法の ${fm(d)} を2進法で表せ。`,t,f(d),[f(d+1),f(d-1),f(d+2),f(d*2)],
+      `2で割った余りを下から並べる。<b>${f(d)}</b>`);}
+  if(v===2){const m=pick([5,7]),r=ri(2,m-1);
+    const ans=(r*r)%m;
+    return numMC(`整数 ${it('a')} を ${fm(m)} で割ると ${fm(r)} 余る。${it('a')}${sup(2)} を ${fm(m)} で割った余りを求めよ。`,t,ans,
+      `${it('a')} = ${fm(m)}${it('k')} + ${fm(r)} とおくと ${it('a')}² = ${fm(m)}(…) + ${fm(r*r)}。${fm(r*r)} を ${fm(m)} で割った余りは <b>${fm(ans)}</b>`);}
+  const N=pick([[12,6],[18,6],[24,8],[36,9],[48,10],[72,12],[60,12],[100,9]]);
+  return numMC(`${fm(N[0])} の正の約数の個数を求めよ。`,t,N[1],
+    `素因数分解して各指数に1を足して掛ける。<b>${fm(N[1])} 個</b>`);});
+reg('mA',()=>{const t='図形の性質';const v=ri(0,3);
+  if(v===0){const L=ri(2,5)*3;
+    return numMC(`△ABC の重心を G、辺 BC の中点を M とする。AM = ${fm(L)} のとき、AG の長さを求めよ。`,t,L*2/3,
+      `重心は中線を 2:1 に内分するので AG = ${fr(2,3)}AM = <b>${fm(L*2/3)}</b>`);}
+  if(v===1){const pa=ri(2,4),pb=pa+ri(2,6),pc=pick([2,3].filter(x=>pa*pb%x===0))||2;
+    const pd=pa*pb/pc;
+    return numMC(`円の2つの弦 AB、CD が点 P で交わっている。PA = ${fm(pa)}、PB = ${fm(pb)}、PC = ${fm(pc)} のとき、PD の長さを求めよ。`,t,pd,
+      `方べきの定理: PA×PB = PC×PD より ${fm(pa)}×${fm(pb)} = ${fm(pc)}×PD。<b>PD = ${fm(pd)}</b>`);}
+  if(v===2){const A=ri(20,60)*2;
+    const inc=ri(0,1);
+    const ans=inc?90+A/2:2*A;
+    return numMC(`△ABC の${inc?'内心を I':'外心を O'} とする。∠A = ${fm(A)}${DEG} のとき、∠B${inc?'I':'O'}C の大きさを求めよ。`,t,ans,
+      inc?`内心では ∠BIC = 90° + ${fr('∠A',2)} = 90 + ${fm(A/2)} = <b>${fm(ans)}°</b>`
+         :`外心では中心角の関係より ∠BOC = 2∠A = <b>${fm(ans)}°</b>`,
+      k=>`${fm(k)}${DEG}`);}
+  const a=ri(1,3),b=ri(1,3),c=ri(1,3),d=ri(1,3);
+  const g=gcd(b*d,a*c);
+  const f=(p,q)=>`${fm(p)} : ${fm(q)}`;
+  const ans=f(b*d/g,a*c/g);
+  const wr=[f(a*c/g,b*d/g),f(a,c),f(b,d),f(a*b,c*d)].filter(x=>x!==ans);
+  return mk(`△ABC の辺 AB 上に F、辺 BC 上に D があり、AF : FB = ${fm(a)} : ${fm(b)}、BD : DC = ${fm(c)} : ${fm(d)} とする。3直線 AD、BE、CF が1点で交わるとき（E は辺 CA 上）、CE : EA を求めよ。`,t,ans,shuffle(wr),
+    `チェバの定理: ${fr('AF','FB')}・${fr('BD','DC')}・${fr('CE','EA')} = 1 より ${fr('CE','EA')} = ${frq(b*d,a*c)}。<b>${ans}</b>`);});
+function sub2(s){return `<sub>${s}</sub>`;}
+/* ============ 数学Ⅱ ============ */
+reg('m2',()=>{const t='式と証明';const v=ri(0,2);
+  if(v===0){const n=ri(4,6),k=ri(1,n-1),a=ri(2,3)*pick([1,-1]);
+    const ans=nCr(n,k)*a**(n-k);
+    return numMC(`(${X} ${a<0?M:'+'} ${fm(Math.abs(a))})${sup(n)} の展開式における ${X}${sup(k)} の係数を求めよ。`,t,ans,
+      `二項定理: 一般項は ${fm(n)}C${it('r')} ${X}${sup(it('r'))} ${pn(a)}${sup(`${fm(n)}${M}${it('r')}`)}。${it('r')} = ${fm(k)} で ${fm(n)}C${fm(k)}×${pn(a)}${sup(n-k)} = ${fm(nCr(n,k))}×${fm(a**(n-k))} = <b>${fm(ans)}</b>`);}
+  if(v===1){const p=ri(-4,4)||2,q=ri(-6,6)||-3,a=ri(-3,3)||2;
+    const ans=a**3+p*a+q;
+    return numMC(`整式 P(${X}) = ${poly([1,X3],[p,X],[q,''])} を ${linEx(1,-a)} で割った余りを求めよ。`,t,ans,
+      `剰余の定理: 余りは P(${fm(a)}) = ${pn(a)}³ ${p<0?M:'+'} ${fm(Math.abs(p))}×${pn(a)} ${q<0?M:'+'} ${fm(Math.abs(q))} = <b>${fm(ans)}</b>`);}
+  const k=pick([4,9,16,25]);
+  return numMC(`${X} > 0 のとき、${X} + ${fr(fm(k),X)} の最小値を求めよ。`,t,2*Math.sqrt(k),
+    `相加平均・相乗平均の関係より ${X} + ${fr(fm(k),X)} ≧ 2${rt(`${X}・${fr(fm(k),X)}`)} = 2${rt(k)} = <b>${fm(2*Math.sqrt(k))}</b>（等号は ${X} = ${fm(Math.sqrt(k))}）`);});
+reg('m2',()=>{const t='複素数と方程式';const v=ri(0,3);
+  const I=it('i');
+  if(v===0){const a=ri(1,4),b=ri(1,3)*pick([1,-1]),c=ri(1,3),d=ri(1,3)*pick([1,-1]);
+    const re=a*c-b*d,im=a*d+b*c;
+    const f=(p,q)=>poly([p,''],[q,I]);
+    return mk(`(${f(a,b)})(${f(c,d)}) を計算せよ。`,t,f(re,im),
+      [f(a*c+b*d,im),f(re,-im),f(a*c,b*d),f(re+1,im)],
+      `${I}² = ${M}1 に注意して展開: (${fm(a*c)} ${M} ${pn(b*d)}) + (${fm(a*d)} + ${fm(b*c)})${I} = <b>${f(re,im)}</b>`);}
+  if(v===1){const n=ri(9,60);
+    const r=n%4;
+    const ans=['1',I,`${M}1`,`${M}${I}`][r];
+    const idx=shuffle([0,1,2,3]);
+    const OPT=['1',I,`${M}1`,`${M}${I}`];
+    return {q:`${I}${sup(n)} を計算せよ。`,topic:t,c:idx.map(i=>OPT[i]),a:idx.indexOf(r),
+      e:`${I}⁴ = 1 なので ${fm(n)} を4で割った余り ${fm(r)} だけが問題。${I}${sup(n)} = ${I}${sup(r)} = <b>${ans}</b>`};}
+  if(v===2){const p=ri(1,5)*pick([1,-1]),q=ri(1,5)*pick([1,-1]);
+    const ask=ri(0,1);
+    const AL=it('α'),BE=it('β');
+    if(ask)return numMC(`二次方程式 ${quadEx(-p,q)} = 0 の2解を ${AL}、${BE} とするとき、${AL}${sup(2)} + ${BE}${sup(2)} の値を求めよ。`,t,p*p-2*q,
+      `解と係数の関係より ${AL}+${BE} = ${fm(p)}、${AL}${BE} = ${fm(q)}。${AL}²+${BE}² = (${AL}+${BE})² ${M} 2${AL}${BE} = ${fm(p*p)} ${M} ${pn(2*q)} = <b>${fm(p*p-2*q)}</b>`);
+    return fracMC(`二次方程式 ${quadEx(-p,q)} = 0 の2解を ${AL}、${BE} とするとき、${fr(1,AL)} + ${fr(1,BE)} の値を求めよ。`,t,p,q,
+      `${fr(1,AL)}+${fr(1,BE)} = ${fr(`${AL}+${BE}`,`${AL}${BE}`)} = <b>${frq(p,q)}</b>`);}
+  const p=ri(1,4)*2;
+  return numMC(`二次方程式 ${poly([1,X2],[p,X])} + ${it('k')} = 0 が重解をもつような定数 ${it('k')} の値を求めよ。`,t,p*p/4,
+    `判別式 D = ${fm(p)}² ${M} 4${it('k')} = 0 より ${it('k')} = <b>${fm(p*p/4)}</b>`);});
+reg('m2',()=>{const t='図形と方程式';const v=ri(0,3);
+  if(v===0){const m=ri(1,3),n=ri(1,3);
+    const x1=ri(-4,2),y1=ri(-4,2);
+    const x2=x1+(m+n)*ri(1,2),y2=y1+(m+n)*ri(-2,2);
+    const px=(n*x1+m*x2)/(m+n),py=(n*y1+m*y2)/(m+n);
+    const f=(a,b)=>`(${fm(a)}, ${fm(b)})`;
+    return mk(`2点 A(${fm(x1)}, ${fm(y1)})、B(${fm(x2)}, ${fm(y2)}) を結ぶ線分 AB を ${fm(m)} : ${fm(n)} に内分する点の座標を求めよ。`,t,
+      f(px,py),[f((m*x1+n*x2)/(m+n),(m*y1+n*y2)/(m+n)),f(px+1,py),f((x1+x2)/2,(y1+y2)/2),f(px,py+1)],
+      `内分点 = ${fr(`${it('n')}${X}₁ + ${it('m')}${X}₂`,`${it('m')}+${it('n')}`)} で計算して <b>${f(px,py)}</b>`);}
+  if(v===1){const a=ri(-3,3),b=ri(-3,3),r=ri(1,4);
+    const c=a*a+b*b-r*r;
+    const f=(p,q,rr)=>`中心 (${fm(p)}, ${fm(q)})、半径 ${fm(rr)}`;
+    return mk(`円 ${poly([1,X2],[1,Y+sup(2)],[-2*a,X],[-2*b,Y],[c,''])} = 0 の中心と半径を求めよ。`,t,
+      f(a,b,r),[f(-a,-b,r),f(a,b,r*r),f(2*a,2*b,r),f(-a,b,r)],
+      `平方完成して (${linEx(1,-a)})² + (${linEx(1,-b,Y)})² = ${fm(r*r)}。<b>${f(a,b,r)}</b>`);}
+  if(v===2){const tri=pick([[3,4,5],[6,8,10],[5,12,13]]);
+    const x0=ri(-3,3),y0=ri(-3,3);
+    const k=ri(1,3);
+    const c=k*tri[2]-tri[0]*x0-tri[1]*y0;
+    return numMC(`点 (${fm(x0)}, ${fm(y0)}) と直線 ${poly([tri[0],X],[tri[1],Y],[c,''])} = 0 の距離を求めよ。`,t,k,
+      `距離 = ${fr(`|${fm(tri[0])}×${pn(x0)} + ${fm(tri[1])}×${pn(y0)} + ${pn(c)}|`,rt(`${fm(tri[0])}²+${fm(tri[1])}²`))} = ${fr(fm(k*tri[2]),fm(tri[2]))} = <b>${fm(k)}</b>`);}
+  const tri=pick([[3,4,5],[6,8,10],[5,12,13],[8,15,17]]);
+  const x1=ri(-4,3),y1=ri(-4,3);
+  return numMC(`2点 (${fm(x1)}, ${fm(y1)})、(${fm(x1+tri[0])}, ${fm(y1+tri[1])}) の間の距離を求めよ。`,t,tri[2],
+    `距離 = ${rt(`${fm(tri[0])}² + ${fm(tri[1])}²`)} = ${rt(tri[2]*tri[2])} = <b>${fm(tri[2])}</b>`);});
+reg('m2',()=>{const t='三角関数';const v=ri(0,3);
+  if(v===0){const bank=[[30,1,6],[45,1,4],[60,1,3],[90,1,2],[120,2,3],[135,3,4],[150,5,6],[210,7,6],[240,4,3],[270,3,2],[300,5,3]];
+    const[d,n,dn]=pick(bank);
+    const f=(a,b)=>b===1?`${fm(a)}π`:fr(a===1?'π':`${fm(a)}π`,fm(b));
+    const wr=[[n+1,dn],[n,dn+1],[n,dn-1||1],[dn,n]].map(z=>f(z[0],z[1]));
+    return mk(`${fm(d)}${DEG} を弧度法（ラジアン）で表せ。`,t,f(n,dn),wr,
+      `180° = π なので ${fm(d)}° = ${fr(fm(d),180)}π = <b>${f(n,dn)}</b>`);}
+  if(v===1){const bank=[['sin 75°','6','2','+'],['cos 15°','6','2','+'],['sin 15°','6','2',M],['cos 75°','6','2',M],['sin 105°','6','2','+'],['cos 105°','2','6',M]];
+    const[nm,r1,r2,sg]=pick(bank);
+    const f=(a,b,s)=>fr(`${rt(a)} ${s} ${rt(b)}`,4);
+    return mk(`加法定理を用いて ${nm} の値を求めよ。`,t,
+      f(r1,r2,sg),[f(r1,r2,sg==='+'?M:'+'),f(r2,r1,sg),fr(`${rt(6)} + ${rt(2)}`,2)],
+      `例: sin 75° = sin(45°+30°) = sin45°cos30° + cos45°sin30°。答えは <b>${f(r1,r2,sg)}</b>`);}
+  if(v===2){const tri=pick([[3,4,5],[5,12,13],[8,15,17]]);
+    const ask=ri(0,1);
+    if(ask)return fracMC(`θ は鋭角で sin θ = ${frq(tri[0],tri[2])} のとき、sin 2θ の値を求めよ。`,t,2*tri[0]*tri[1],tri[2]*tri[2],
+      `sin 2θ = 2 sinθ cosθ = 2×${frq(tri[0],tri[2])}×${frq(tri[1],tri[2])} = <b>${frq(2*tri[0]*tri[1],tri[2]*tri[2])}</b>`);
+    return fracMC(`sin θ = ${frq(tri[0],tri[2])} のとき、cos 2θ の値を求めよ。`,t,tri[2]*tri[2]-2*tri[0]*tri[0],tri[2]*tri[2],
+      `cos 2θ = 1 ${M} 2sin²θ = 1 ${M} 2×${frq(tri[0]*tri[0],tri[2]*tri[2])} = <b>${frq(tri[2]*tri[2]-2*tri[0]*tri[0],tri[2]*tri[2])}</b>`);}
+  const[a,b,c]=pick([[3,4,5],[5,12,13],[6,8,10],[8,15,17],[7,24,25]]);
+  const k=ri(-3,3);
+  return numMC(`関数 ${Y} = ${poly([a,'sin θ'],[b,'cos θ'],[k,''])} の最大値を求めよ。`,t,c+k,
+    `合成すると ${Y} = ${fm(c)} sin(θ + α) ${k<0?M:k>0?'+':''} ${k?fm(Math.abs(k)):''}。sin の最大値1より最大値は <b>${fm(c+k)}</b>`);});
+reg('m2',()=>{const t='指数・対数';const v=ri(0,3);
+  if(v===0){const bank=[[2,8,3],[2,16,4],[3,27,3],[3,81,4],[5,125,3],[2,'{1/8}',-3],[3,'{1/9}',-2],[4,64,3],[10,1000,3]];
+    const[a,b,ans]=pick(bank);
+    const bDisp=typeof b==='string'?fr(1,fm(a**(-ans))):fm(b);
+    return numMC(`log${sub2(fm(a))} ${bDisp} の値を求めよ。`,t,ans,
+      `${fm(a)}${sup(fm(ans))} = ${bDisp} なので <b>${fm(ans)}</b>`);}
+  if(v===1){const bank=[['4','8',3,2],['9','27',3,2],['8','16',4,3],['27','9',2,3],['25','125',3,2],['16','32',5,4]];
+    const[base,val,n,d]=pick(bank);
+    return fracMC(`方程式 ${base}${sup(X)} = ${val} を解け。`,t,n,d,
+      `底をそろえて指数を比較すると ${X} = <b>${frq(n,d)}</b>`);}
+  if(v===2){const l2=.301,l3=.4771;
+    const bank=[['log₁₀ 4',2*l2,'2 log₁₀ 2'],['log₁₀ 8',3*l2,'3 log₁₀ 2'],['log₁₀ 5',1-l2,'log₁₀(10/2) = 1 − log₁₀ 2'],['log₁₀ 6',l2+l3,'log₁₀ 2 + log₁₀ 3'],['log₁₀ 9',2*l3,'2 log₁₀ 3'],['log₁₀ 12',2*l2+l3,'2 log₁₀ 2 + log₁₀ 3']];
+    const[nm,val,how]=pick(bank);
+    const ans=Math.round(val*10000)/10000;
+    const f=x=>fm(Math.round(x*10000)/10000);
+    return mk(`log₁₀ 2 = 0.3010、log₁₀ 3 = 0.4771 とするとき、${nm} の値を求めよ。`,t,
+      f(ans),[f(ans+.301),f(ans-.1),f(1-ans),f(ans+.0001)],
+      `${nm} = ${how} = <b>${f(ans)}</b>`);}
+  const a=pick([2,3]),k=ri(2,4),c=ri(1,5);
+  return numMC(`方程式 log${sub2(fm(a))}(${linEx(1,-c)}) = ${fm(k)} を解け。`,t,a**k+c,
+    `真数 = ${fm(a)}${sup(k)} = ${fm(a**k)} なので ${X} = ${fm(a**k)} + ${fm(c)} = <b>${fm(a**k+c)}</b>`,
+    n=>`${X} = ${fm(n)}`);});
+reg('m2',()=>{const t='微分・積分';const v=ri(0,3);
+  if(v===0){const a=ri(-4,4)||2,b=ri(-5,5)||3,p=ri(-2,2)||1;
+    const ans=3*p*p+2*a*p+b;
+    return numMC(`関数 ${it('f')}(${X}) = ${poly([1,X3],[a,X2],[b,X])} について、微分係数 ${it('f')}′(${fm(p)}) を求めよ。`,t,ans,
+      `${it('f')}′(${X}) = ${poly([3,X2],[2*a,X],[b,''])}。${X} = ${fm(p)} を代入して <b>${fm(ans)}</b>`);}
+  if(v===1){const a=ri(-3,3)||1,p=ri(-2,2)||1;
+    const fp=p*p+a*p,m=2*p+a,k=fp-m*p;
+    const f=(mm,kk)=>`${Y} = ${linEx(mm,kk)}`;
+    return mk(`曲線 ${Y} = ${poly([1,X2],[a,X])} 上の点 (${fm(p)}, ${fm(fp)}) における接線の方程式を求めよ。`,t,
+      f(m,k),[f(m,k+1),f(m+1,k),f(2*p,k),f(m,fp)],
+      `${Y}′ = ${poly([2,X],[a,''])} より傾きは ${fm(m)}。${Y} = ${fm(m)}(${linEx(1,-p)}) + ${pn(fp)} = <b>${f(m,k)}</b>`);}
+  if(v===2){const k2=ri(1,3);
+    const ans=2*k2**3;
+    return numMC(`関数 ${it('f')}(${X}) = ${poly([1,X3],[-3*k2*k2,X])} の極大値を求めよ。`,t,ans,
+      `${it('f')}′(${X}) = 3${X}² ${M} ${fm(3*k2*k2)} = 3(${linEx(1,k2)})(${linEx(1,-k2)})。極大は ${X} = ${fm(-k2)} で ${it('f')}(${fm(-k2)}) = <b>${fm(ans)}</b>`);}
+  const s=pick([2,3,4,6]);
+  const n6=s**3;
+  return fracMC(`放物線 ${Y} = ${poly([1,X2],[-s,X])} と ${X} 軸で囲まれた図形の面積を求めよ。`,t,n6,6,
+    `交点は ${X} = 0, ${fm(s)}。面積 = ${fr(`(β${M}α)³`,6)} = ${fr(`${fm(s)}³`,6)} = <b>${frq(n6,6)}</b>`);});
+
+/* ============ 数学B ============ */
+reg('mB',()=>{const t='数列(等差)';const v=ri(0,2);
+  const a1=ri(-5,8),d=ri(2,6)*pick([1,-1]);
+  if(v===0){const n=ri(8,20);
+    return numMC(`初項 ${fm(a1)}、公差 ${fm(d)} の等差数列の第 ${fm(n)} 項を求めよ。`,t,a1+(n-1)*d,
+      `${it('a')}${sub2(it('n'))} = ${it('a')}₁ + (${it('n')} ${M} 1)${it('d')} = ${fm(a1)} + ${fm(n-1)}×${pn(d)} = <b>${fm(a1+(n-1)*d)}</b>`);}
+  if(v===1){const n=ri(6,12);
+    const S=n*(2*a1+(n-1)*d)/2;
+    return numMC(`初項 ${fm(a1)}、公差 ${fm(d)} の等差数列の初項から第 ${fm(n)} 項までの和を求めよ。`,t,S,
+      `S${sub2(it('n'))} = ${fr(it('n'),2)}{2${it('a')}₁ + (${it('n')}${M}1)${it('d')}} = ${fr(fm(n),2)}×${pn(2*a1+(n-1)*d)} = <b>${fm(S)}</b>`);}
+  const f=(p,q)=>linEx(p,q,N_);
+  return mk(`初項 ${fm(a1)}、公差 ${fm(d)} の等差数列の一般項 ${it('a')}${sub2(it('n'))} を求めよ。`,t,
+    f(d,a1-d),[f(d,a1),f(a1,d),f(d+1,a1-d),f(d,a1)],
+    `${it('a')}${sub2(it('n'))} = ${fm(a1)} + (${it('n')}${M}1)×${pn(d)} = <b>${f(d,a1-d)}</b>`);});
+reg('mB',()=>{const t='数列(等比・Σ)';const v=ri(0,2);
+  if(v===0){const a=ri(1,4)*pick([1,-1]),r=pick([2,3,-2]),n=ri(4,6);
+    return numMC(`初項 ${fm(a)}、公比 ${fm(r)} の等比数列の第 ${fm(n)} 項を求めよ。`,t,a*r**(n-1),
+      `${it('a')}${sub2(it('n'))} = ${it('a')}₁${it('r')}${sup(`${it('n')}${M}1`)} = ${fm(a)}×${pn(r)}${sup(n-1)} = <b>${fm(a*r**(n-1))}</b>`);}
+  if(v===1){const n=ri(6,15);
+    const which=ri(0,1);
+    const ans=which?n*(n+1)*(2*n+1)/6:n*(n+1)/2;
+    return numMC(`${which?`1² + 2² + 3² + … + ${fm(n)}²`:`1 + 2 + 3 + … + ${fm(n)}`} の値を求めよ。`,t,ans,
+      which?`Σ${it('k')}² = ${fr(`${it('n')}(${it('n')}+1)(2${it('n')}+1)`,6)} = ${fr(`${fm(n)}×${fm(n+1)}×${fm(2*n+1)}`,6)} = <b>${fm(ans)}</b>`
+           :`Σ${it('k')} = ${fr(`${it('n')}(${it('n')}+1)`,2)} = ${fr(`${fm(n)}×${fm(n+1)}`,2)} = <b>${fm(ans)}</b>`);}
+  const a=ri(2,4),b=ri(1,5),n=ri(5,10);
+  const ans=a*n*(n+1)/2+b*n;
+  return numMC(`Σ${sup(fm(n))}${sub2(`${it('k')}=1`)} (${linEx(a,b,it('k'))}) の値を求めよ。`,t,ans,
+    `${fm(a)}Σ${it('k')} + Σ${fm(b)} = ${fm(a)}×${fr(`${fm(n)}×${fm(n+1)}`,2)} + ${fm(b)}×${fm(n)} = ${fm(a*n*(n+1)/2)} + ${fm(b*n)} = <b>${fm(ans)}</b>`);});
+reg('mB',()=>{const t='漸化式';const v=ri(0,2);
+  if(v===0){const c=ri(1,5),d=ri(2,5);
+    const f=(p,q)=>linEx(p,q,N_);
+    return mk(`${it('a')}₁ = ${fm(c)}、${it('a')}${sub2(it('n')+'+1')} = ${it('a')}${sub2(it('n'))} + ${fm(d)} で定まる数列の一般項を求めよ。`,t,
+      f(d,c-d),[f(d,c),f(c,d),f(d+1,c-d),f(d,c-d+1)],
+      `公差 ${fm(d)} の等差数列なので ${it('a')}${sub2(it('n'))} = ${fm(c)} + (${it('n')}${M}1)×${fm(d)} = <b>${f(d,c-d)}</b>`);}
+  if(v===1){const c=ri(1,4),r=pick([2,3]);
+    const f=(cc,rr,ee)=>`${cc===1?'':fm(cc)+'・'}${fm(rr)}${sup(ee)}`;
+    const e1=`${it('n')}${M}1`;
+    return mk(`${it('a')}₁ = ${fm(c)}、${it('a')}${sub2(it('n')+'+1')} = ${fm(r)}${it('a')}${sub2(it('n'))} で定まる数列の一般項を求めよ。`,t,
+      f(c,r,e1),[f(c,r,it('n')),f(r,c,e1),f(c*r,r,e1),f(c,r+1,e1)],
+      `公比 ${fm(r)} の等比数列なので ${it('a')}${sub2(it('n'))} = ${fm(c)}×${fm(r)}${sup(e1)} = <b>${f(c,r,e1)}</b>`);}
+  const p=pick([2,3]),al=ri(1,3)*pick([1,-1]),c=al+pick([1,2]);
+  const q=al*(1-p);
+  const co=c-al;
+  const e1=`${it('n')}${M}1`;
+  const f=(cc,pp,aa)=>`${cc===1?'':fm(cc)+'・'}${fm(pp)}${sup(e1)} ${aa<0?M:'+'} ${fm(Math.abs(aa))}`;
+  return mk(`${it('a')}₁ = ${fm(c)}、${it('a')}${sub2(it('n')+'+1')} = ${fm(p)}${it('a')}${sub2(it('n'))} ${q<0?M:'+'} ${fm(Math.abs(q))} で定まる数列の一般項を求めよ。`,t,
+    f(co,p,al),[f(co,p,-al),f(c,p,al),f(co+1,p,al),f(co,p,al+1)],
+    `特性方程式 α = ${fm(p)}α ${q<0?M:'+'} ${fm(Math.abs(q))} の解は α = ${fm(al)}。{${it('a')}${sub2(it('n'))} ${M} ${pn(al)}} は公比 ${fm(p)} の等比数列で初項 ${fm(co)}。<b>${f(co,p,al)}</b>`);});
+reg('mB',()=>{const t='統計的な推測';const v=ri(0,2);
+  if(v===0){const[n,d]=pick([[40,2],[80,2],[120,2],[36,3],[45,3],[90,3],[72,6],[180,6]]);
+    const askV=ri(0,1);
+    const E=n/d,V=n*(1/d)*(1-1/d);
+    const ans=askV?V:E;
+    return numMC(`1回の試行で事象 A が起こる確率が ${frq(1,d)} である独立な試行を ${fm(n)} 回行う。A が起こる回数 X の${askV?'分散 V(X)':'期待値 E(X)'} を求めよ。`,t,ans,
+      askV?`二項分布 B(${fm(n)}, ${frq(1,d)}) の分散は ${it('npq')} = ${fm(n)}×${frq(1,d)}×${frq(d-1,d)} = <b>${fm(V)}</b>`
+          :`二項分布の期待値は ${it('np')} = ${fm(n)}×${frq(1,d)} = <b>${fm(E)}</b>`);}
+  if(v===1){const mu=pick([50,60,100]),sg=pick([5,10,20]),z=pick([1,-1,2,-2,1.5]);
+    const x=mu+z*sg;
+    return numMC(`確率変数 X が平均 ${fm(mu)}、標準偏差 ${fm(sg)} の正規分布に従うとき、X = ${fm(x)} を標準化した値 Z を求めよ。`,t,z,
+      `Z = ${fr(`X ${M} μ`,'σ')} = ${fr(`${fm(x)} ${M} ${fm(mu)}`,fm(sg))} = <b>${fm(z)}</b>`);}
+  const[n,sg]=pick([[4,6],[9,12],[16,20],[25,10],[4,10],[9,6],[16,12]]);
+  return numMC(`母標準偏差 ${fm(sg)} の母集団から大きさ ${fm(n)} の無作為標本を抽出するとき、標本平均の標準偏差を求めよ。`,t,sg/Math.sqrt(n),
+    `標本平均の標準偏差は ${fr('σ',rt(it('n')))} = ${fr(fm(sg),rt(n))} = <b>${fm(sg/Math.sqrt(n))}</b>`);});
+/* ============ 数学Ⅲ ============ */
+const E_=it('e');
+reg('m3',()=>{const t='極限';const v=ri(0,3);
+  if(v===0){const a=ri(2,9),c=ri(2,9),b=ri(-5,5),d=ri(-5,5);
+    return fracMC(`lim${sub2(`${it('n')}→∞`)} ${fr(linEx(a,b,N_),linEx(c,d,N_))} の値を求めよ。`,t,a,c,
+      `分母・分子を ${it('n')} で割ると ${fr(`${fm(a)} + ${fm(b)}/${it('n')}`,`${fm(c)} + ${fm(d)}/${it('n')}`)} → <b>${frq(a,c)}</b>`);}
+  if(v===1){const a=ri(1,4)*2;
+    return fracMC(`lim${sub2(`${it('n')}→∞`)} (${rt(`${it('n')}² + ${fm(a)}${it('n')}`)} ${M} ${it('n')}) の値を求めよ。`,t,a,2,
+      `分子を有理化すると ${fr(`${fm(a)}${it('n')}`,`${rt(`${it('n')}²+${fm(a)}${it('n')}`)} + ${it('n')}`)} → ${fr(fm(a),2)} = <b>${frq(a,2)}</b>`);}
+  if(v===2){const a=ri(2,6),b=ri(2,6);
+    return fracMC(`lim${sub2(`${X}→0`)} ${fr(`sin ${fm(a)}${X}`,`sin ${fm(b)}${X}`)} の値を求めよ。`,t,a,b,
+      `${fr(`sin ${it('ax')}`,it('ax'))} → 1 を使うと極限は ${fr(it('a'),it('b'))} = <b>${frq(a,b)}</b>`);}
+  const a=ri(1,4)*pick([1,-1]);
+  const r=pick([[1,2],[1,3],[2,3],[1,4],[3,4]]);
+  const den=r[1]-r[0];
+  return fracMC(`初項 ${fm(a)}、公比 ${frq(r[0],r[1])} の無限等比級数の和を求めよ。`,t,a*r[1],den,
+    `|r| < 1 なので収束し、和 = ${fr(it('a'),`1 ${M} ${it('r')}`)} = ${fr(fm(a),frq(den,r[1]))} = <b>${frq(a*r[1],den)}</b>`);});
+reg('m3',()=>{const t='微分法';const v=ri(0,3);
+  if(v===0){const a=ri(2,5);
+    const f=(k,e2)=>`${fm(k)}${E_}${sup(e2)}`;
+    const ex=`${fm(a)}${X}`;
+    return mk(`関数 ${it('f')}(${X}) = ${E_}${sup(ex)} の導関数を求めよ。`,t,
+      f(a,ex),[`${E_}${sup(ex)}`,f(a,`${fm(a)}${X}${M}1`),`${fm(a)}${X}${E_}${sup(`${fm(a)}${X}${M}1`)}`],
+      `合成関数の微分: (${E_}${sup(it('u'))})′ = ${it('u')}′${E_}${sup(it('u'))}。<b>${f(a,ex)}</b>`);}
+  if(v===1){const a=ri(2,5),b=ri(1,6);
+    const f=k=>fr(fm(k),linEx(a,b));
+    return mk(`関数 ${it('f')}(${X}) = log(${linEx(a,b)}) の導関数を求めよ。（log は自然対数）`,t,
+      f(a),[f(1),f(a*a),fr(fm(a),X)],
+      `(log ${it('u')})′ = ${fr(`${it('u')}′`,it('u'))} = <b>${f(a)}</b>`);}
+  if(v===2){const a=ri(2,5);
+    const f=(k,fn)=>`${fm(k)} ${fn}(${fm(a)}${X})`;
+    const sc=ri(0,1);
+    if(sc)return mk(`関数 ${it('f')}(${X}) = sin ${fm(a)}${X} の導関数を求めよ。`,t,
+      f(a,'cos'),[f(a,'sin'),`${M}${f(a,'cos')}`,`cos ${fm(a)}${X}`],
+      `(sin ${it('ax')})′ = ${it('a')} cos ${it('ax')}。<b>${f(a,'cos')}</b>`);
+    return mk(`関数 ${it('f')}(${X}) = cos ${fm(a)}${X} の導関数を求めよ。`,t,
+      `${M}${fm(a)} sin ${fm(a)}${X}`,[f(a,'sin'),`${M}${fm(a)} cos ${fm(a)}${X}`,`${M}sin ${fm(a)}${X}`],
+      `(cos ${it('ax')})′ = ${M}${it('a')} sin ${it('ax')}。<b>${M}${fm(a)} sin ${fm(a)}${X}</b>`);}
+  const bank=[
+    [`${X}${E_}${sup(X)}`,`(${X} + 1)${E_}${sup(X)}`,[`${X}${E_}${sup(X)}`,`${E_}${sup(X)}`,`(${X} ${M} 1)${E_}${sup(X)}`],'積の微分: (uv)′ = u′v + uv′'],
+    [`${X} log ${X}`,`log ${X} + 1`,[`log ${X}`,fr(1,X),`${X} log ${X} + 1`],'積の微分より (x log x)′ = log x + x・(1/x)'],
+    [`${X} sin ${X}`,`sin ${X} + ${X} cos ${X}`,[`cos ${X}`,`sin ${X} ${M} ${X} cos ${X}`,`${X} cos ${X}`],'積の微分: (x sin x)′ = sin x + x cos x'],
+    [fr('1',X),`${M}${fr('1',X+sup(2))}`,[fr('1',X+sup(2)),`${M}${fr('1',X)}`,`log ${X}`],'(x⁻¹)′ = −x⁻²'],
+  ];
+  const[fn,ans,wr,how]=pick(bank);
+  return mk(`関数 ${it('f')}(${X}) = ${fn} の導関数を求めよ。`,t,ans,wr,`${how}。<b>${ans}</b>`);});
+reg('m3',()=>{const t='積分法';const v=ri(0,2);
+  if(v===0){const a=ri(2,5);
+    return numMC(`定積分 ∫${sub2(1)}${sup(`${E_}${sup(a)}`)} ${fr(1,X)} ${it('dx')} の値を求めよ。`,t,a,
+      `∫${fr(1,X)}${it('dx')} = log|${X}| なので log ${E_}${sup(a)} ${M} log 1 = <b>${fm(a)}</b>`);}
+  if(v===1){const bank=[
+      ['∫'+sub2(0)+sup('π')+' sin '+X+` ${it('dx')}`,'2','[−cos x] を代入して (−cos π) − (−cos 0) = 1 + 1'],
+      ['∫'+sub2(0)+sup(fr('π',2))+' cos '+X+` ${it('dx')}`,'1','[sin x] より sin(π/2) − sin 0 = 1'],
+      ['∫'+sub2(0)+sup(1)+` ${X}${E_}${sup(X)} ${it('dx')}`,'1','部分積分: [xeˣ − eˣ] = (e − e) − (0 − 1) = 1'],
+      ['∫'+sub2(1)+sup(E_)+` log ${X} ${it('dx')}`,'1','部分積分: [x log x − x] = (e − e) − (0 − 1) = 1'],
+      ['∫'+sub2(0)+sup('π')+` ${X} sin ${X} ${it('dx')}`,'π','部分積分: [−x cos x + sin x] = π'],
+    ];
+    const[qs,ans,how]=pick(bank);
+    const wr=['0','1','2','π',M+'1',fr('π',2)].filter(x=>x!==ans);
+    return mk(`定積分 ${qs} の値を求めよ。`,t,ans,shuffle(wr),`${how}。<b>${ans}</b>`);}
+  const a=ri(1,3);
+  const f=k=>`${E_}${sup(k)} ${M} 1`;
+  return mk(`曲線 ${Y} = ${E_}${sup(X)}、${X} 軸、${Y} 軸、直線 ${X} = ${fm(a)} で囲まれた図形の面積を求めよ。`,t,
+    f(fm(a)),[f(fm(a+1)),`${E_}${sup(fm(a))}`,f(fm(a))+' + 1',`${fm(a)}${E_}${sup(fm(a))}`],
+    `面積 = ∫${sub2(0)}${sup(fm(a))}${E_}${sup(X)}${it('dx')} = [${E_}${sup(X)}] = <b>${E_}${sup(fm(a))} ${M} 1</b>`);});
+
+/* ============ 数学C ============ */
+reg('mC',()=>{const t='平面ベクトル';const v=ri(0,3);
+  const va=vec(it('a')),vb=vec(it('b'));
+  if(v===0){const a=[ri(-3,3),ri(-3,3)],b=[ri(-3,3),ri(-3,3)],p=ri(1,3),q=ri(1,3)*pick([1,-1]);
+    const rx=p*a[0]+q*b[0],ry=p*a[1]+q*b[1];
+    const f=(x,y)=>`(${fm(x)}, ${fm(y)})`;
+    return mk(`${va} = (${fm(a[0])}, ${fm(a[1])})、${vb} = (${fm(b[0])}, ${fm(b[1])}) のとき、${fm(p)}${va} ${q<0?M:'+'} ${fm(Math.abs(q))}${vb} を成分で表せ。`,t,
+      f(rx,ry),[f(ry,rx),f(rx+1,ry),f(rx,ry-1),f(p*a[0]-q*b[0],p*a[1]-q*b[1])],
+      `各成分ごとに計算: (${fm(p)}×${pn(a[0])} ${q<0?M:'+'} ${fm(Math.abs(q))}×${pn(b[0])}, …) = <b>${f(rx,ry)}</b>`);}
+  if(v===1){const a=[ri(-4,4),ri(-4,4)],b=[ri(-4,4),ri(-4,4)];
+    const d=a[0]*b[0]+a[1]*b[1];
+    return numMC(`${va} = (${fm(a[0])}, ${fm(a[1])})、${vb} = (${fm(b[0])}, ${fm(b[1])}) のとき、内積 ${va}・${vb} を求めよ。`,t,d,
+      `${va}・${vb} = ${pn(a[0])}×${pn(b[0])} + ${pn(a[1])}×${pn(b[1])} = <b>${fm(d)}</b>`);}
+  if(v===2){const a1=ri(1,4),a2=ri(1,4)*pick([1,-1]),b2=ri(1,4)*pick([1,-1]);
+    const tv=-a2*b2/a1;
+    const tOK=Number.isInteger(tv)?tv:-a2*b2;
+    const a1v=Number.isInteger(tv)?a1:1;
+    return numMC(`${va} = (${fm(a1v)}, ${fm(a2)})、${vb} = (${it('t')}, ${fm(b2)}) が垂直であるとき、${it('t')} の値を求めよ。`,t,tOK,
+      `垂直 ⇔ 内積 = 0: ${fm(a1v)}${it('t')} + ${pn(a2)}×${pn(b2)} = 0 より ${it('t')} = <b>${fm(tOK)}</b>`);}
+  const la=ri(1,3),lb=ri(1,3),d=ri(-3,3);
+  const ans=la*la+2*d+lb*lb;
+  return numMC(`|${va}| = ${fm(la)}、|${vb}| = ${fm(lb)}、${va}・${vb} = ${fm(d)} のとき、|${va} + ${vb}|${sup(2)} の値を求めよ。`,t,ans,
+    `|${va}+${vb}|² = |${va}|² + 2${va}・${vb} + |${vb}|² = ${fm(la*la)} + ${fm(2*d)} + ${fm(lb*lb)} = <b>${fm(ans)}</b>`);});
+reg('mC',()=>{const t='空間ベクトル';
+  const va=vec(it('a')),vb=vec(it('b'));
+  if(ri(0,1)){const bank=[[1,2,2,3],[2,3,6,7],[1,4,8,9],[4,4,7,9],[2,6,9,11]];
+    const[x,y,z,L]=pick(bank);
+    return numMC(`${va} = (${fm(x)}, ${fm(y)}, ${M}${fm(z)}) の大きさ |${va}| を求めよ。`,t,L,
+      `|${va}| = ${rt(`${fm(x)}² + ${fm(y)}² + (${M}${fm(z)})²`)} = ${rt(L*L)} = <b>${fm(L)}</b>`);}
+  const a=[ri(-3,3),ri(-3,3),ri(-3,3)],b=[ri(-3,3),ri(-3,3),ri(-3,3)];
+  const d=a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+  return numMC(`${va} = (${a.map(fm).join(', ')})、${vb} = (${b.map(fm).join(', ')}) のとき、内積 ${va}・${vb} を求めよ。`,t,d,
+    `対応する成分の積の和: ${a.map((x,i)=>`${pn(x)}×${pn(b[i])}`).join(' + ')} = <b>${fm(d)}</b>`);});
+reg('mC',()=>{const t='複素数平面';const v=ri(0,2);
+  const I=it('i'),Z=it('z');
+  if(v===0){const bank=[[3,4,5],[5,12,13],[8,15,17],[1,1,rt(2)],[2,2,srt(2,2)]];
+    const[re,im,L]=pick(bank);
+    return mk(`複素数 ${Z} = ${poly([re,''],[im,I])} の絶対値 |${Z}| を求めよ。`,t,
+      String(typeof L==='number'?fm(L):L),[fm(re+im),String(typeof L==='number'?srt(1,L*L-1):fm(2)),fm(Math.abs(re-im)||7),fm(re*im)],
+      `|${Z}| = ${rt(`${fm(re)}² + ${fm(im)}²`)} = <b>${typeof L==='number'?fm(L):L}</b>`);}
+  if(v===1){const bank=[['1 + '+it('i'),1,4],[M+'1 + '+it('i'),3,4],['1 + '+srt(1,3)+it('i'),1,3],[srt(1,3)+' + '+it('i'),1,6],[M+'1 '+M+' '+it('i'),5,4]];
+    const[zs,n,d]=pick(bank);
+    const f=(nn,dd)=>dd===1?`${fm(nn)}π`:fr(nn===1?'π':`${fm(nn)}π`,fm(dd));
+    return mk(`複素数 ${Z} = ${zs} の偏角 arg ${Z} を求めよ。ただし 0 ≦ arg ${Z} < 2π とする。`,t,
+      f(n,d),[f(n+1,d),f(n,d===4?3:4),f(d,n===1?2:n),f(n+2,d)],
+      `複素数平面上で点 ${zs} の表す角を考える。<b>arg ${Z} = ${f(n,d)}</b>`);}
+  const bank=[[3,3,M+'1'],[4,2,I],[6,3,I],[2,4,'1'],[6,6,M+'1'],[3,6,'1']];
+  const[k,n,ans]=pick(bank);
+  const OPT=['1',I,M+'1',M+I];
+  const wr=OPT.filter(o=>o!==ans);
+  return mk(`${Z} = cos ${fr('π',fm(k))} + ${I} sin ${fr('π',fm(k))} のとき、${Z}${sup(n)} の値を求めよ。`,t,ans,wr,
+    `ド・モアブルの定理: ${Z}${sup(n)} = cos ${fr(`${fm(n)}π`,fm(k))} + ${I} sin ${fr(`${fm(n)}π`,fm(k))} = <b>${ans}</b>`);});
+reg('mC',()=>{const t='2次曲線';const v=ri(0,2);
+  if(v===0){const bank=[[25,9,4],[25,16,3],[169,144,5],[13,4,3],[9,5,2],[16,7,3],[100,36,8]];
+    const[A,B,c]=pick(bank);
+    const f=cc=>`(±${fm(cc)}, 0)`;
+    return mk(`楕円 ${fr(X2,fm(A))} + ${fr(Y+sup(2),fm(B))} = 1 の焦点の座標を求めよ。`,t,
+      f(c),[`(0, ±${fm(c)})`,f(c+1),f(Math.round(Math.sqrt(A))),`(±${fm(A-B)}, 0)`],
+      `焦点は (±${rt(`${it('a')}² ${M} ${it('b')}²`)}, 0) = (±${rt(A-B)}, 0) = <b>${f(c)}</b>`);}
+  if(v===1){const a=ri(1,4);let b=ri(1,4);if(b===a)b=a===4?3:a+1;
+    const fs=(p,q)=>p===q?`${Y} = ±${X}`:`${Y} = ±${frq(p,q)}${X}`;
+    return mk(`双曲線 ${fr(X2,fm(a*a))} ${M} ${fr(Y+sup(2),fm(b*b))} = 1 の漸近線の方程式を求めよ。`,t,
+      fs(b,a),[fs(a,b),fs(b*b,a*a),`${Y} = ±${fm(b)}${X}`],
+      `漸近線は ${Y} = ±${fr(it('b'),it('a'))}${X} = <b>${fs(b,a)}</b>`);}
+  const p=ri(1,5);
+  const f=(a,b)=>`焦点 (${fm(a)}, 0)、準線 ${X} = ${fm(b)}`;
+  return mk(`放物線 ${Y}${sup(2)} = ${fm(4*p)}${X} の焦点と準線を求めよ。`,t,
+    f(p,-p),[f(-p,p),f(4*p,-4*p),f(p,p),f(2*p,-2*p)],
+    `${Y}² = 4${it('p')}${X} の焦点は (${it('p')}, 0)、準線は ${X} = ${M}${it('p')}。4${it('p')} = ${fm(4*p)} より ${it('p')} = ${fm(p)}。<b>${f(p,-p)}</b>`);});
+
+/* ============ 大学受験対策 ============ */
+reg('uex',()=>{const t='常用対数(桁数)';
+  const bank=[[2,30,10],[2,40,13],[2,50,16],[2,60,19],[2,100,31],[3,20,10],[3,30,15],[3,40,20]];
+  const[base,n,ans]=pick(bank);
+  const lg=base===2?'0.3010':'0.4771';
+  return numMC(`log₁₀ ${fm(base)} = ${lg} とする。${fm(base)}${sup(n)} は何桁の整数か。`,t,ans,
+    `log₁₀ ${fm(base)}${sup(n)} = ${fm(n)} × ${lg} = ${fm(Math.round(n*(base===2?.301:.4771)*100)/100)}。整数部分が ${fm(ans-1)} なので <b>${fm(ans)} 桁</b>`,
+    k=>`${fm(k)} 桁`);});
+reg('uex',()=>{const t='三角関数の最大・最小';
+  const[a,b,c]=pick([[3,4,5],[5,12,13],[6,8,10],[8,15,17]]);
+  const k=ri(-5,5);
+  const askMin=ri(0,1);
+  const ans=askMin?k-c:k+c;
+  return numMC(`関数 ${Y} = ${poly([a,'sin θ'],[b,'cos θ'],[k,''])} の${askMin?'最小値':'最大値'}を求めよ。`,t,ans,
+    `合成: ${Y} = ${rt(`${fm(a)}²+${fm(b)}²`)} sin(θ+α) ${k<0?M:k>0?'+':''} ${k?fm(Math.abs(k)):''} = ${fm(c)} sin(θ+α) ${k<0?M:k>0?'+':''} ${k?fm(Math.abs(k)):''}。${askMin?'最小':'最大'}値は <b>${fm(ans)}</b>`);});
+reg('uex',()=>{const t='微分(解の個数)';
+  const k=ri(1,3);
+  const m=2*k**3;
+  const f=(lo,hi)=>`${fm(lo)} < ${it('c')} < ${fm(hi)}`;
+  return mk(`3次方程式 ${poly([1,X3],[-3*k*k,X])} + ${it('c')} = 0 が異なる3個の実数解をもつような定数 ${it('c')} の値の範囲を求めよ。`,t,
+    f(-m,m),[f(0,m),`${it('c')} < ${fm(-m)}, ${fm(m)} < ${it('c')}`,f(-m+1,m-1),`${it('c')} = ±${fm(m)}`],
+    `${it('f')}(${X}) = ${poly([1,X3],[-3*k*k,X])} の極大値は ${fm(m)}、極小値は ${fm(-m)}。グラフと直線 ${Y} = ${M}${it('c')} が3点で交わる条件から <b>${f(-m,m)}</b>`);});
+reg('uex',()=>{const t='数列(部分分数分解)';
+  const n=ri(5,15);
+  return fracMC(`${fr(1,'1・2')} + ${fr(1,'2・3')} + … + ${fr(1,`${fm(n)}・${fm(n+1)}`)} の値を求めよ。`,t,n,n+1,
+    `${fr(1,`${it('k')}(${it('k')}+1)`)} = ${fr(1,it('k'))} ${M} ${fr(1,`${it('k')}+1`)} と分解すると途中が消えて 1 ${M} ${fr(1,fm(n+1))} = <b>${frq(n,n+1)}</b>`);});
+reg('uex',()=>{const t='条件付き確率';
+  const a=ri(3,5),b=ri(3,6);
+  return fracMC(`当たり ${fm(a)} 本を含む ${fm(a+b)} 本のくじを、引いたくじは戻さずに2本引く。1本目が当たりであったとき、2本目も当たりである確率を求めよ。`,t,a-1,a+b-1,
+    `1本目で当たりが1本減るので、残り ${fm(a+b-1)} 本中当たり ${fm(a-1)} 本。<b>${frq(a-1,a+b-1)}</b>`);});
+reg('uex',()=>{const t='積分(面積公式)';
+  const a=ri(1,3),b=ri(1,4);
+  const s=a+b;
+  return fracMC(`放物線 ${Y} = ${poly([1,X2],[-a,X])} と直線 ${Y} = ${fm(b)}${X} で囲まれた図形の面積を求めよ。`,t,s**3,6,
+    `交点は ${X} = 0, ${fm(s)}。面積 = ${fr(`|β ${M} α|³`,6)} = ${fr(`${fm(s)}³`,6)} = <b>${frq(s**3,6)}</b>`);});
+reg('uex',()=>{const t='ベクトル(内積)';
+  const la=ri(2,5),lb=ri(2,6),A=pick([60,120]);
+  const d=la*lb/2*(A===60?1:-1);
+  return numMC(`△ABC において AB = ${fm(la)}、AC = ${fm(lb)}、∠A = ${fm(A)}${DEG} のとき、内積 ${vec('AB')}・${vec('AC')} を求めよ。`,t,d,
+    `${vec('AB')}・${vec('AC')} = |AB||AC| cos A = ${fm(la)}×${fm(lb)}×${pn(A===60?.5:-.5)} = <b>${fm(d)}</b>`);});
+/* ============ courses ============ */
+const UNITS=[
+  {id:'j1',cat:'jhs',name:'中学1年',tab:'中1',color:'#3a7bd5',topics:'正負の数・文字式・一次方程式・比例と反比例・平面図形・空間図形'},
+  {id:'j2',cat:'jhs',name:'中学2年',tab:'中2',color:'#2e9e6b',topics:'式の計算・連立方程式・一次関数・図形の性質と角・確率・データの活用'},
+  {id:'j3',cat:'jhs',name:'中学3年',tab:'中3',color:'#c98a2b',topics:'展開・因数分解・平方根・二次方程式・y=ax²・三平方の定理・円'},
+  {id:'jex',cat:'jhs',name:'高校受験対策',tab:'受験',color:'#c9333f',exam:true,topics:'入試典型問題(式の値・放物線と直線・相似・空間図形・規則性・確率)'},
+  {id:'m1',cat:'hs',name:'数学Ⅰ',tab:'Ⅰ',color:'#3a7bd5',topics:'数と式・集合と命題・二次関数・二次不等式・図形と計量・データの分析'},
+  {id:'mA',cat:'hs',name:'数学A',tab:'A',color:'#2e9e6b',topics:'場合の数・確率・整数の性質・図形の性質'},
+  {id:'m2',cat:'hs',name:'数学Ⅱ',tab:'Ⅱ',color:'#7a5fc9',topics:'式と証明・複素数と方程式・図形と方程式・三角関数・指数対数・微分積分'},
+  {id:'mB',cat:'hs',name:'数学B',tab:'B',color:'#c98a2b',topics:'数列(等差・等比・Σ・漸化式)・統計的な推測'},
+  {id:'m3',cat:'hs',name:'数学Ⅲ',tab:'Ⅲ',color:'#b0578d',topics:'極限・無限級数・微分法・積分法'},
+  {id:'mC',cat:'hs',name:'数学C',tab:'C',color:'#2b8a9e',topics:'平面ベクトル・空間ベクトル・複素数平面・2次曲線'},
+  {id:'uex',cat:'hs',name:'大学受験対策',tab:'受験',color:'#c9333f',exam:true,topics:'入試典型問題(常用対数・三角関数・微積分・数列・確率・ベクトル)'},
+];
+const QN=10;
+const timeFor=u=>u.exam?60:u.cat==='jhs'?40:50;
+const RANKS=[[10,'S','合格確実'],[8,'A','合格圏内'],[6,'B','あと一歩'],[4,'C','要復習'],[0,'D','基礎から']];
+
+/* ============ storage ============ */
+const LSKEY='nyushi-math-drill-v1';
+let best={};
+try{best=JSON.parse(localStorage.getItem(LSKEY)||'{}')||{};}catch(e){best={};}
+const saveBest=()=>{try{localStorage.setItem(LSKEY,JSON.stringify(best));}catch(e){}};
+
+/* ============ home ============ */
+function renderHome(){
+  for(const cat of['jhs','hs']){
+    const g=$('grid-'+cat);g.innerHTML='';
+    for(const u of UNITS.filter(x=>x.cat===cat)){
+      const b=best[u.id];
+      const el=document.createElement('button');
+      el.className='ucard';el.style.setProperty('--uc',u.color);
+      el.innerHTML=`<span class="utab">${u.tab}</span>
+        <span class="uname">${u.name}${u.exam?'<span class="exam-b">入試</span>':''}</span>
+        <span class="utopics">${u.topics}</span>
+        <span class="ubest"><span>自己ベスト</span><b>${b?`${b.score}点 (${b.correct}/${QN})`:'─'}</b></span>`;
+      el.addEventListener('click',()=>startGame(u));
+      g.appendChild(el);
+    }
+  }
+}
+
+/* ============ game state ============ */
+let S=null,tick=null;
+function show(id){for(const s of['scr-home','scr-game','scr-res'])$(s).classList.toggle('hide',s!==id);window.scrollTo(0,0);}
+function makeQuiz(uid){
+  const qs=[],seen=new Set();let guard=0;
+  while(qs.length<QN&&guard<300){guard++;const q=genQ(uid);
+    if(seen.has(q.q))continue;seen.add(q.q);qs.push(q);}
+  while(qs.length<QN)qs.push(genQ(uid));
+  return qs;
+}
+function startGame(u){
+  S={u,qs:makeQuiz(u.id),i:0,score:0,streak:0,maxStreak:0,correct:0,locked:false,tmax:timeFor(u)*1000,tleft:0};
+  $('g-unit').textContent=u.name;
+  $('g-score').textContent='0';
+  $('g-streak').classList.add('hide');
+  show('scr-game');showQ();
+}
+function stopTimer(){if(tick){clearInterval(tick);tick=null;}}
+function showQ(){
+  const q=S.qs[S.i];S.locked=false;
+  $('g-num').textContent=`第${S.i+1}問`;
+  $('g-prog').textContent=`${S.i+1} / ${QN}`;
+  $('g-topic').textContent=q.topic;
+  $('g-q').innerHTML=q.q;
+  $('g-fb').classList.add('hide');
+  const box=$('g-choices');box.innerHTML='';
+  q.c.forEach((c,i)=>{
+    const b=document.createElement('button');
+    b.className='ch';
+    b.innerHTML=`<span class="no">${'①②③④'[i]}</span><span class="cv">${c}</span>`;
+    b.addEventListener('click',()=>choose(i));
+    box.appendChild(b);
+  });
+  S.tleft=S.tmax;
+  const bar=$('g-timer'),tb=$('g-timerbox');tb.classList.remove('low');bar.style.width='100%';
+  stopTimer();
+  tick=setInterval(()=>{
+    S.tleft-=100;
+    const r=Math.max(0,S.tleft/S.tmax);
+    bar.style.width=(r*100)+'%';
+    if(r<.25)tb.classList.add('low');
+    if(S.tleft<=0){stopTimer();choose(-1);}
+  },100);
+}
+function choose(i){
+  if(!S||S.locked)return;
+  S.locked=true;stopTimer();
+  const q=S.qs[S.i];
+  const btns=[...$('g-choices').children];
+  btns.forEach(b=>b.disabled=true);
+  const ok=i===q.a;
+  btns[q.a].classList.add('correct');
+  if(i>=0&&!ok)btns[i].classList.add('wrong');
+  btns.forEach((b,j)=>{if(j!==q.a&&j!==i)b.classList.add('dim');});
+  let gained=0;
+  if(ok){
+    S.correct++;S.streak++;S.maxStreak=Math.max(S.maxStreak,S.streak);
+    gained=100+Math.ceil(S.tleft/S.tmax*50)+Math.min(S.streak-1,5)*10;
+    S.score+=gained;
+  }else{S.streak=0;}
+  $('g-score').textContent=S.score;
+  const chip=$('g-streak');
+  if(S.streak>=2){chip.textContent=`${S.streak}連続○`;chip.classList.remove('hide');
+    chip.classList.remove('pop');void chip.offsetWidth;chip.classList.add('pop');}
+  else chip.classList.add('hide');
+  const fb=$('g-fb');
+  fb.classList.remove('hide','ok','ng');
+  fb.classList.add(ok?'ok':'ng');
+  $('g-mark').textContent=ok?'○':'✗';
+  $('g-fbh').textContent=ok?`正解！ +${gained}点`:(i<0?'時間切れ…':'不正解…');
+  $('g-fbe').innerHTML=`<b>解説</b>　${q.e}`;
+  $('btn-next').textContent=S.i===QN-1?'結果を見る ▸':'次へ ▸';
+  $('btn-next').focus();
+}
+function next(){
+  if(!S||!S.locked)return;
+  if(S.i===QN-1){endGame();return;}
+  S.i++;showQ();
+}
+function endGame(){
+  stopTimer();
+  const[,rk,rt2]=RANKS.find(r=>S.correct>=r[0]);
+  $('r-unit').textContent=`${S.u.name}　─　結果`;
+  $('r-rank').textContent=rk;
+  $('r-rankt').textContent=rt2;
+  $('r-score').textContent=S.score;
+  $('r-correct').textContent=`${S.correct}/${QN}`;
+  $('r-streak').textContent=S.maxStreak;
+  const b=best[S.u.id];
+  const isNew=!b||S.score>b.score;
+  if(isNew){best[S.u.id]={score:S.score,correct:S.correct};saveBest();}
+  $('r-best').classList.toggle('hide',!isNew);
+  $('r-hi').textContent=(best[S.u.id]||{score:0}).score;
+  show('scr-res');
+}
+/* ============ wiring ============ */
+$('btn-next').addEventListener('click',next);
+$('btn-quit').addEventListener('click',()=>{stopTimer();S=null;renderHome();show('scr-home');});
+$('btn-retry').addEventListener('click',()=>startGame(S.u));
+$('btn-home').addEventListener('click',()=>{S=null;renderHome();show('scr-home');});
+document.addEventListener('keydown',e=>{
+  if(!S||$('scr-game').classList.contains('hide'))return;
+  if(e.key>='1'&&e.key<='4'&&!S.locked){const b=$('g-choices').children[+e.key-1];if(b)b.click();}
+  else if(e.key==='Enter'&&S.locked){e.preventDefault();next();}
+});
+renderHome();
+
+</script>
+</body>
+</html>
